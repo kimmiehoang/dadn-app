@@ -4,20 +4,15 @@ import { json } from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import jwt from 'jsonwebtoken';
-import User from './model/userModel.js';
+import userRouter from './router/userRouter.js';
 
 const app = express();
-const port = 3000;
+const port = 5000;
 
 app.use(json());
 app.use(cors());
 
-app.get('/', (req, res) => {
-  res.send('DADN!');
-});
-
-const user = new User();
-const list = user.findAll();
+app.use('/user', userRouter);
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);

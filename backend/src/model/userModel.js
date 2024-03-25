@@ -13,17 +13,17 @@ const db = mongoose.connection;
 const userCollection = db.collection('user');
 
 // Class User để thực hiện truy vấn dữ liệu
-class User {
+class UserModel {
   //   constructor(name, email, password) {
   //     this.name = name;
   //     this.email = email;
   //     this.password = password;
   //   }
 
-  async findAll() {
+  async getAllUsers() {
     try {
       const users = await userCollection.find().toArray();
-      console.log(users);
+      //console.log(users);
       return users;
     } catch (error) {
       throw new Error(`Error querying users: ${error.message}`);
@@ -31,4 +31,4 @@ class User {
   }
 }
 
-export default User;
+export default UserModel;
