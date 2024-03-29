@@ -2,6 +2,7 @@ import "./styles.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Protected from "./utils-component/protectedRoute";
 import UserProfile from "./component/UserProfile";
+import SignIn from "./component/SignIn";
 
 export default function App() {
   const isLoggedIn = false;
@@ -20,7 +21,7 @@ export default function App() {
               </Protected>
             }
           */}
-
+          <Route index element={<SignIn />} />
           <Route path="/userProfile" element={<UserProfile />} />
 
           {/* handle error */}

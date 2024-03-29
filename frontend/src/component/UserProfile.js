@@ -15,7 +15,7 @@ class UserProfile extends Component {
   componentDidMount() {
     // Gửi yêu cầu API để lấy thông tin người dùng khi component được mount
     axios
-      .get("http://localhost:5000/user/list")
+      .get("http://localhost:5000/users/list")
       .then((response) => {
         //console.log(response.data);
         this.setState({ userInfo: response.data });
