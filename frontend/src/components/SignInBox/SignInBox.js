@@ -1,8 +1,8 @@
-import React from "react";
+import { useState } from "react";
 import "./signIn.css";
 
-function SignIn() {
-  const [state, setState] = React.useState({
+function SignInBox() {
+  const [state, setState] = useState({
     email: "",
     password: "",
   });
@@ -51,7 +51,7 @@ function SignIn() {
   };
 
   return (
-    <form onSubmit={handleOnSubmit}>
+    <form className="signIn-From" onSubmit={handleOnSubmit}>
       <h1>
         <span className="custom-span">Sign in to </span>{" "}
         <i className="fa-solid fa-house-laptop"></i> Smart Home
@@ -77,4 +77,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default SignInBox;
