@@ -11,13 +11,15 @@ const DeviceSwitch = ({ label, type, status, onSwitch }) => {
     <div className="device-switch">
       <span>{label}</span>
       <div>
-        <i class={types[type]}></i>
+        <i className={types[type]}></i>
         <Switch
           onChange={onSwitch}
           checked={status}
           offColor="#EFEFEF"
           onColor="#A770FF"
           width={80}
+          checkedIcon={false}
+          uncheckedIcon={false}
         />
       </div>
     </div>

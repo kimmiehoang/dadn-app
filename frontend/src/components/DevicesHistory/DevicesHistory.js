@@ -6,15 +6,15 @@ const DevicesHistory = () => {
       <p>Device activity history</p>
       <ul>
         <li>
-          <i class="fa-solid fa-lightbulb"></i>
+          <i className="fa-solid fa-lightbulb"></i>
           <span>Light</span>
         </li>
         <li>
-          <i class="fa-solid fa-fan"></i>
+          <i className="fa-solid fa-fan"></i>
           <span>Air conditioner</span>
         </li>
         <li>
-          <i class="fa-solid fa-door-closed"></i>
+          <i className="fa-solid fa-door-closed"></i>
           <span>Door</span>
         </li>
       </ul>

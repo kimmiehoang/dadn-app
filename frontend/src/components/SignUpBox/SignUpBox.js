@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "./signIn.css";
+import { Link } from "react-router-dom";
+import "./signUp.css";
 
-function SignInBox() {
-  const navigate = useNavigate();
-
+function SignUpBox() {
   const [state, setState] = useState({
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
   const handleChange = (evt) => {
@@ -21,7 +20,7 @@ function SignInBox() {
   const handleOnSubmit = async (evt) => {
     evt.preventDefault();
 
-    const { email, password } = state;
+    const { email, password, confirmPassword } = state;
 
     // Chuẩn bị dữ liệu để gửi lên API
     const formData = new FormData();
@@ -29,7 +28,7 @@ function SignInBox() {
     formData.append("password", password);
 
     try {
-      const response = await fetch("https://example.com/api/signin", {
+      const response = await fetch("https://example.com/api/signup", {
         method: "POST",
         body: formData,
       });
@@ -42,25 +41,22 @@ function SignInBox() {
       setState({
         email: "",
         password: "",
+        confirmPassword: "",
       });
 
       // Xử lý kết quả từ API nếu cần
 
-      // Chuyển hướng hoặc thực hiện các hành động khác sau khi đăng nhập thành công
+      // Chuyển hướng hoặc thực hiện các hành động khác sau khi đăng ký thành công
     } catch (error) {
-      console.error("Error signing in:", error.message);
+      console.error("Error signing up:", error.message);
       // Xử lý lỗi nếu cần
     }
   };
 
-  const handleSignIn = () => {
-    navigate("/dashboard");
-  };
-
   return (
-    <form className="signIn-From" onSubmit={handleOnSubmit}>
+    <form className="signUp-From" onSubmit={handleOnSubmit}>
       <h1>
-        <span className="custom-span">Sign in to </span>{" "}
+        <span className="custom-span">Sign up to </span>{" "}
         <i className="fa-solid fa-house-laptop"></i> Smart Home
       </h1>
       <input
@@ -77,17 +73,22 @@ function SignInBox() {
         value={state.password}
         onChange={handleChange}
       />
-      <button type="submit" onClick={handleSignIn}>
-        Sign In
-      </button>
+      <input
+        type="password"
+        name="confirmPassword"
+        placeholder="Confirm password"
+        value={state.confirmPassword}
+        onChange={handleChange}
+      />
+      <button type="submit">Sign Up</button>
       <div className="cls-link">
-        <span>Not a user?</span>{" "}
-        <Link to="/signup" className="primary-link">
-          Sign up
+        <span>Already a member?</span>{" "}
+        <Link to="/signin" className="primary-link">
+          Sign in
         </Link>
       </div>
     </form>
   );
 }
 
-export default SignInBox;
+export default SignUpBox;
