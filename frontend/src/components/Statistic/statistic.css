@@ -11,8 +11,40 @@
 }
 .diagram {
   width: 100%;
-  background-color: gray;
   height: 250px;
+  background-color: #f7f1ff;
+  border-radius: 16px;
+}
+.diagram > div,
+.weather > div {
+  padding: 8px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+.diagram img {
+  width: 100%;
+  height: 200px;
+}
+.diagram .title,
+.weather .title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--lightpurple);
+  font-weight: bold;
+}
+.diagram .title i,
+.weather .title i {
+  font-size: 32px;
+  margin-right: 16px;
+  color: #ffbc00;
+}
+
+.diagram .option {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 4px 8px;
 }
 
 .grid-container {
@@ -21,14 +53,58 @@
   grid-template-columns: 1fr 1fr; /* Tạo ra hai cột có kích thước bằng nhau */
   gap: 20px; /* Đặt khoảng cách giữa các cột */
 }
-.grid-item{
-  height: 200px;
+.grid-item {
+  height: 160px;
+  padding: 8px 0px;
   background-color: gray;
   border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #ecdeff;
 }
-.weather{
+.grid-item span:first-child {
+  color: var(--lightpurple);
+  font-weight: bold;
+}
+.grid-item .param {
+  font-size: 40px;
+  font-weight: bold;
+}
+.grid-item i {
+  font-size: 60px;
+  color: #ffbc00;
+}
+
+.weather {
   margin-top: 32px;
   width: 100%;
-  height: 100px;
-  background-color: gray;
+  height: 140px;
+  background-color: #f7f1ff;
+  border-radius: 16px;
+}
+.weather .title i{
+  font-size: 14px;
+}
+.weather .address{
+  font-weight: 500;
+}
+.weather .forecast{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.forecast div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-weight: bold;
+
+}
+.forecast div span:first-child{
+  color: var(--lightpurple);
+}
+.forecast img{
+  height: 60px;
 }
