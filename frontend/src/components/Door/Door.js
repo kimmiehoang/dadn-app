@@ -13,8 +13,8 @@ const Door = ({ label, type, status, onChangeStatus }) => {
       <p>{label}</p>
       <div className="lock-icon" onClick={onChangeStatus}>
         <i
-          class={`fa-solid fa-lock${status ? "-open" : ""}`}
-          style={{ color: status ? "#000" : "#FFD43B" }}
+          className={`fa-solid fa-lock${status ? "-open" : ""}`}
+          style={{ color: status ? "#fff" : "#A770FF" }}
         ></i>
       </div>
     </div>

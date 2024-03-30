@@ -9,12 +9,12 @@ const Statistic = () => {
       <div className="diagram">
         <div>
           <div className="title">
-            <i class="fa-solid fa-bolt"></i>
+            <i className="fa-solid fa-bolt"></i>
             <span>Power Consumed</span>
           </div>
           <div className="option">
             <span>This week</span>
-            <i class="fa-solid fa-chevron-down"></i>
+            <i className="fa-solid fa-chevron-down"></i>
           </div>
         </div>
         <img src={chartImg} alt="graph" />
@@ -23,18 +23,18 @@ const Statistic = () => {
         <div className="temp grid-item">
           <span>Temperature</span>
           <span className="param">+ 30°C</span>
-          <i class="fa-solid fa-temperature-quarter"></i>
+          <i className="fa-solid fa-temperature-quarter"></i>
         </div>
         <div className="hum grid-item">
           <span>Humidity</span>
           <span className="param">30%</span>
-          <i class="fa-solid fa-water"></i>
+          <i className="fa-solid fa-water"></i>
         </div>
       </div>
       <div className="weather">
         <div>
           <div className="title">
-            <i class="fa-solid fa-cloud"></i>
+            <i className="fa-solid fa-cloud"></i>
             <span>Weather forecast</span>
           </div>
           <div className="address">

@@ -76,3 +76,11 @@
   width: 80%;
   border-radius: 10px;
 }
+
+.signIn-From .cls-link {
+  margin-top: 5px;
+}
+
+.signIn-From .primary-link {
+  color: #2196F3;
+}
