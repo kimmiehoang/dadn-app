@@ -1,35 +1,20 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat:400,800");
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  background: #E2DEFF;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  font-family: "Montserrat", sans-serif;
-  height: 80vh;
-}
-
-h1 {
+/* @import url("https://fonts.googleapis.com/css?family=Montserrat:400,800"); */
+.signIn-From h1 {
   font-weight: bold;
   margin-bottom: 10px;
   color: #09006E;
 }
 
-.custom-span {
+.signIn-From .custom-span {
     color: #A770FF;
     font-size: xx-large;
 }
 
-h2 {
+.signIn-From h2 {
   text-align: center;
 }
 
-p {
+.signIn-From p {
   font-size: 14px;
   font-weight: 100;
   line-height: 20px;
@@ -37,18 +22,18 @@ p {
   margin: 20px 0 30px;
 }
 
-span {
+.signIn-From span {
   font-size: 12px;
 }
 
-a {
+.signIn-From a {
   color: #333;
   font-size: 14px;
   text-decoration: none;
   margin: 15px 0;
 }
 
-button {
+.signIn-From button {
   border-radius: 10px;
   border: 1px solid #5640DC;
   background-color: #5640DC;
@@ -61,20 +46,20 @@ button {
   width: 80%;
 }
 
-button:active {
+.signIn-From button:active {
   transform: scale(0.95);
 }
 
-button:focus {
+.signIn-From button:focus {
   outline: none;
 }
 
-button.ghost {
+.signIn-From button.ghost {
   background-color: transparent;
   border-color: #ffffff;
 }
 
-form {
+.signIn-From {
   background-color: #ffffff;
   align-items: center;
   justify-content: center;
@@ -83,16 +68,11 @@ form {
   border-radius: 25px;
 }
 
-input {
+.signIn-From input {
   background-color: #ffffff;
   border: 1px solid #E5E5ED;
   padding: 12px 15px;
   margin: 15px 0;
   width: 80%;
   border-radius: 10px;
-}
-
-sign-in-container{
-  width: "40%";
-  height: "40%";
 }

@@ -1,0 +1,23 @@
+:root {
+  --purblue: #5640dc;
+  --darkblue: #09006e;
+  --lightpurple: #A770FF;
+}
+* {
+  font-family: sans-serif;
+  box-sizing: border-box;
+}
+body {
+  background-color: #e2deff;
+}
+.d-flex {
+  display: flex;
+}
+.f-column {
+  flex-direction: column;
+}
+.f-center {
+  justify-content: center;
+  align-items: center;
+}
+@import "~@fortawesome/fontawesome-free/css/all.css";

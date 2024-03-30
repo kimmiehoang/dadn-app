@@ -1,0 +1,34 @@
+.statistic {
+  width: calc(100% * (5 / 12));
+  height: 100%;
+  background-color: #fff;
+  padding: 0 32px;
+  padding-top: 32px;
+}
+.statistic h3 {
+  color: #170c5b;
+  font-weight: 600;
+}
+.diagram {
+  width: 100%;
+  background-color: gray;
+  height: 250px;
+}
+
+.grid-container {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Tạo ra hai cột có kích thước bằng nhau */
+  gap: 20px; /* Đặt khoảng cách giữa các cột */
+}
+.grid-item{
+  height: 200px;
+  background-color: gray;
+  border-radius: 16px;
+}
+.weather{
+  margin-top: 32px;
+  width: 100%;
+  height: 100px;
+  background-color: gray;
+}

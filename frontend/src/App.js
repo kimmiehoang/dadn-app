@@ -1,17 +1,17 @@
-import "./styles.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Protected from "./utils-component/protectedRoute";
-import UserProfile from "./component/UserProfile";
-import SignIn from "./component/SignIn";
+import UserProfile from "./components/UserProfile";
+import SignIn from "./pages/signIn";
+import Dashboard from "./pages/dashboard";
+import "./app.css";
 
 export default function App() {
   const isLoggedIn = false;
 
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          {/*<Route index element={<LogIn />} />
+    <BrowserRouter>
+      <Routes>
+        {/*<Route index element={<LogIn />} />
           {/* General 
           <Route path="/register" element={<Register />} />
           <Route path="/forgotPassword" element={<ForgotPassword />} /> 
@@ -21,13 +21,13 @@ export default function App() {
               </Protected>
             }
           */}
-          <Route index element={<SignIn />} />
-          <Route path="/userProfile" element={<UserProfile />} />
+        <Route index element={<Dashboard />} />
+        <Route path="/signIn" element={<SignIn />} />
+        <Route path="/userProfile" element={<UserProfile />} />
 
-          {/* handle error */}
-          <Route path="*" element={<h1>Page Not Found</h1>} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+        {/* handle error */}
+        <Route path="*" element={<h1>Page Not Found</h1>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
