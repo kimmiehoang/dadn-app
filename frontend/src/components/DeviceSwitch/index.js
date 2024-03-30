@@ -1,1 +1,1 @@
-export {default} from "./DeviceSwitch.js";
+export { default } from "./DeviceSwitch.js";

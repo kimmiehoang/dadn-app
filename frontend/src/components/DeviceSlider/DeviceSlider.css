@@ -1,4 +1,4 @@
-.device-switch {
+.device-slider {
   background-color: var(--darkblue);
   border-radius: 16px;
   color: #fff;
@@ -6,22 +6,20 @@
   margin-bottom: 24px;
 }
 
-.device-switch span {
+.device-slider .custom-label {
   margin-left: 16px;
   display: block;
 }
 
-.device-switch > div {
+.device-slider > div {
   display: flex;
   justify-content: space-around;
   align-items: center;
   padding: 10px 0;
 }
 
-.device-switch > div i {
+.device-slider > div i {
   font-size: 32px;
+  margin-left: 10px;
 }
-
-.react-switch-handle {
-  transform: translateX(30px);
-}
+  

@@ -2,15 +2,41 @@ import { useState } from "react";
 import LeftSideBar from "../../components/LeftSideBar";
 import Statistic from "../../components/Statistic";
 import DeviceSwitch from "../../components/DeviceSwitch";
+import DeviceSlider from "../../components/DeviceSlider";
 import Door from "../../components/Door";
 import DevicesHistory from "../../components/DevicesHistory";
 import "./style.css";
 
 const Dashboard = () => {
-  const [checked, setChecked] = useState(false);
+  const [checkedFront, setCheckedFront] = useState(false);
+  const [checkedBack, setCheckedBack] = useState(false);
+  const [checkedLight, setCheckedLight] = useState(false);
+  const [checkedAir, setCheckedAir] = useState(0);
+  const [checkedAutoLight, setCheckedAutoLight] = useState(false);
+  const [checkedAutoAir, setCheckedAutoAir] = useState(false);
 
-  const handleChange = (nextChecked) => {
-    setChecked(nextChecked);
+  const handleChangeFront = (nextChecked) => {
+    setCheckedFront(nextChecked);
+  };
+
+  const handleChangeBack = (nextChecked) => {
+    setCheckedBack(nextChecked);
+  };
+
+  const handleChangeLight = (nextChecked) => {
+    setCheckedLight(nextChecked);
+  };
+
+  const handleChangeAir = (nextChecked) => {
+    setCheckedAir(nextChecked);
+  };
+
+  const handleChangeAutoLight = (nextChecked) => {
+    setCheckedAutoLight(nextChecked);
+  };
+
+  const handleChangeAutoAir = (nextChecked) => {
+    setCheckedAutoAir(nextChecked);
   };
 
   return (
@@ -28,44 +54,44 @@ const Dashboard = () => {
             <DeviceSwitch
               label="Light"
               type="light"
-              status={checked}
-              onSwitch={handleChange}
+              status={checkedLight}
+              onSwitch={handleChangeLight}
             />
             <DeviceSwitch
               label="Auto lighting mode"
               type="light"
-              status={checked}
-              onSwitch={handleChange}
+              status={checkedAutoLight}
+              onSwitch={handleChangeAutoLight}
             />
             <Door
               label="Front door"
               type="front"
-              status={checked}
-              onChangeStatus={handleChange}
+              status={checkedFront}
+              onChangeStatus={handleChangeFront}
             />
           </div>
           <div className="w-50">
-            <DeviceSwitch
+            <DeviceSlider
               label="Air conditioner"
               type="airConditioner"
-              status={checked}
-              onSwitch={handleChange}
+              value={checkedAir}
+              onChangeSlider={handleChangeAir}
             />
             <DeviceSwitch
               label="Auto air-conditioning mode"
               type="airConditioner"
-              status={checked}
-              onSwitch={handleChange}
+              status={checkedAutoAir}
+              onSwitch={handleChangeAutoAir}
             />
             <Door
               label="Back door"
               type="back"
-              status={checked}
-              onChangeStatus={handleChange}
+              status={checkedBack}
+              onChangeStatus={handleChangeBack}
             />
           </div>
         </div>
-        <DevicesHistory/>
+        <DevicesHistory />
       </div>
       <Statistic />
     </div>
