@@ -1,0 +1,22 @@
+.device-switch {
+  background-color: var(--darkblue);
+  border-radius: 16px;
+  color: #fff;
+  padding: 8px 0 12px;
+  margin-bottom: 24px;
+}
+.device-switch span {
+  margin-left: 16px;
+  display: block;
+}
+.device-switch > div {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.device-switch > div i {
+  font-size: 32px;
+}
+.react-switch-handle {
+  transform: translateX(30px);
+}

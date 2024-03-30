@@ -31,14 +31,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--lightpurple);
+  color: var(--light-purple);
   font-weight: bold;
 }
 .diagram .title i,
 .weather .title i {
   font-size: 32px;
   margin-right: 16px;
-  color: #ffbc00;
+  color: var(--light-orange);
 }
 
 .diagram .option {
@@ -65,7 +65,7 @@
   background-color: #ecdeff;
 }
 .grid-item span:first-child {
-  color: var(--lightpurple);
+  color: var(--light-purple);
   font-weight: bold;
 }
 .grid-item .param {
@@ -74,7 +74,7 @@
 }
 .grid-item i {
   font-size: 60px;
-  color: #ffbc00;
+  color: var(--light-orange);
 }
 
 .weather {
@@ -84,27 +84,26 @@
   background-color: #f7f1ff;
   border-radius: 16px;
 }
-.weather .title i{
+.weather .title i {
   font-size: 14px;
 }
-.weather .address{
+.weather .address {
   font-weight: 500;
 }
-.weather .forecast{
+.weather .forecast {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.forecast div{
+.forecast div {
   display: flex;
   flex-direction: column;
   justify-content: center;
   font-weight: bold;
-
 }
-.forecast div span:first-child{
-  color: var(--lightpurple);
+.forecast div span:first-child {
+  color: var(--light-purple);
 }
-.forecast img{
+.forecast img {
   height: 60px;
 }

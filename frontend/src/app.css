@@ -1,7 +1,8 @@
 :root {
-  --purblue: #5640dc;
+  --lightblue: #5640dc;
   --darkblue: #09006e;
-  --lightpurple: #A770FF;
+  --light-purple: #A770FF;
+  --light-orange: #ffbc00;
 }
 * {
   font-family: sans-serif;
