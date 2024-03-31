@@ -8,7 +8,6 @@ const DeviceSlider = ({ label, type, value, onChangeSlider }) => {
   };
 
   const handleSliderChange = (event, newValue) => {
-    //console.log(newValue); // Log the new value when slider changes
     onChangeSlider(newValue); // Call parent component's onChangeSlider function
   };
 
@@ -26,7 +25,7 @@ const DeviceSlider = ({ label, type, value, onChangeSlider }) => {
           marks
           max={75}
           style={{ width: "40%" }}
-          onChange={handleSliderChange}
+          onChangeCommitted={handleSliderChange} // Sử dụng onChangeCommitted thay vì onChange
         />
       </div>
     </div>
