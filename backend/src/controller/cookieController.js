@@ -2,7 +2,7 @@ class CookieController {
   constructor() {}
 
   encodeCookie(payload, key) {
-    var payloadEncode = (payload * 232 + 123456).toString();
+    var payloadEncode = (payload + 232 + 123456).toString();
     var token = payloadEncode + key;
     return token;
   }

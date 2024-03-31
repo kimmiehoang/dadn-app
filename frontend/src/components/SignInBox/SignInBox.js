@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./signIn.css";
+import Cookie from "universal-cookie";
 
 function SignInBox() {
   const navigate = useNavigate();
@@ -23,38 +24,39 @@ function SignInBox() {
 
     const { email, password } = state;
 
-    // Chuẩn bị dữ liệu để gửi lên API
-    const formData = new FormData();
-    formData.append("email", email);
-    formData.append("password", password);
+    console.log(state);
+
+    const userData = {
+      email,
+      password,
+    };
 
     try {
-      const response = await fetch("https://example.com/api/signin", {
+      const response = await fetch("http://localhost:5000/users/signin", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to sign in");
-      }
-
-      // Đặt lại trạng thái form sau khi submit thành công
       setState({
         email: "",
         password: "",
       });
 
-      // Xử lý kết quả từ API nếu cần
-
-      // Chuyển hướng hoặc thực hiện các hành động khác sau khi đăng nhập thành công
+      const data = await response.json();
+      //console.log(data);
+      if (data.success == true) {
+        const cookie = new Cookie();
+        cookie.set("token", data.token, { path: "/" });
+        cookie.set("isLogged", data.success, { path: "/" });
+        //console.log(cookie);
+        navigate("/dashboard");
+      }
     } catch (error) {
       console.error("Error signing in:", error.message);
-      // Xử lý lỗi nếu cần
     }
-  };
-
-  const handleSignIn = () => {
-    navigate("/dashboard");
   };
 
   return (
@@ -77,9 +79,7 @@ function SignInBox() {
         value={state.password}
         onChange={handleChange}
       />
-      <button type="submit" onClick={handleSignIn}>
-        Sign In
-      </button>
+      <button type="submit">Sign In</button>
       <div className="cls-link">
         <span>Not a user?</span>{" "}
         <Link to="/signup" className="primary-link">
