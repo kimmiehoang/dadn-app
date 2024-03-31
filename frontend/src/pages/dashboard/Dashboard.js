@@ -116,7 +116,7 @@ const Dashboard = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            // "X-AIO-Key": "aio_rYuu499vi5lvUQeMevSF43xynz87", // Thay thế bằng API Key của bạn từ Adafruit
+            "X-AIO-Key": "aio_rYuu499vi5lvUQeMevSF43xynz87", // Thay thế bằng API Key của bạn từ Adafruit
           },
         }
       );
