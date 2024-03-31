@@ -28,6 +28,11 @@
   font-weight: 800;
   font-size: larger;
   color: var(--lightblue);
+  cursor: pointer;
+}
+.leftSideBar .off-icon:hover{
+  box-shadow: 0dvb 0px 3px 4px var(--lightblue);
+  border-radius: 50%;
 }
 .leftSideBar .btn {
   width: 60%;
@@ -47,6 +52,11 @@
   background-color: var(--lightblue);
   color: white;
 }
+.btn:not(.active):hover{
+  border: 1px solid var(--lightblue);
+}
+
+
 .leftSideBar .contact{
   position: absolute;
   bottom: 10px;
