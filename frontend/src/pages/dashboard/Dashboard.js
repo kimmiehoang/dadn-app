@@ -23,6 +23,7 @@ const Dashboard = () => {
   const [checkedAutoLight, setCheckedAutoLight] = useState(false);
   const [checkedAutoAir, setCheckedAutoAir] = useState(false);
   const clickedDeviceType = useRef("");
+  const AIOkey = "aio_rYuu499vi5lvUQeMevSF43xynz87";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -116,7 +117,7 @@ const Dashboard = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            "X-AIO-Key": "aio_rYuu499vi5lvUQeMevSF43xynz87", // Thay thế bằng API Key của bạn từ Adafruit
+            "X-AIO-Key": AIOkey, // Thay thế bằng API Key của bạn từ Adafruit
           },
         }
       );
@@ -149,7 +150,7 @@ const Dashboard = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            "X-AIO-Key": "aio_rYuu499vi5lvUQeMevSF43xynz87", // Thay thế bằng API Key của bạn từ Adafruit
+            "X-AIO-Key": AIOkey, // Thay thế bằng API Key của bạn từ Adafruit
           },
         }
       );
@@ -171,7 +172,7 @@ const Dashboard = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            "X-AIO-Key": "aio_rYuu499vi5lvUQeMevSF43xynz87", // Thay thế bằng API Key của bạn từ Adafruit
+            "X-AIO-Key": AIOkey, // Thay thế bằng API Key của bạn từ Adafruit
           },
         }
       );
@@ -199,7 +200,7 @@ const Dashboard = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            "X-AIO-Key": "aio_rYuu499vi5lvUQeMevSF43xynz87", // Thay thế bằng API Key của bạn từ Adafruit
+            "X-AIO-Key": AIOkey, // Thay thế bằng API Key của bạn từ Adafruit
           },
         }
       );
@@ -228,7 +229,7 @@ const Dashboard = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            "X-AIO-Key": "aio_rYuu499vi5lvUQeMevSF43xynz87", // Thay thế bằng API Key của bạn từ Adafruit
+            "X-AIO-Key": AIOkey, // Thay thế bằng API Key của bạn từ Adafruit
           },
         }
       );
