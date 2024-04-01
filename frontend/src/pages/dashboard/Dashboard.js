@@ -23,7 +23,7 @@ const Dashboard = () => {
   const [checkedAutoLight, setCheckedAutoLight] = useState(false);
   const [checkedAutoAir, setCheckedAutoAir] = useState(false);
   const clickedDeviceType = useRef("");
-  const AIOkey = "aio_oUGi21VoEgn3DJqHsRerSbSKBuNX";
+  const AIOkey = "aio_rYuu499vi5lvUQeMevSF43xynz87";
 
   useEffect(() => {
     const fetchData = async () => {
