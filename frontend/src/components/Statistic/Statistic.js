@@ -3,6 +3,7 @@ import "./statistic.css";
 import chartImg from "../../assets/images/chart.png";
 import weatherImg from "../../assets/images/forecast.png";
 import axios from "axios";
+import { ReactComponent as Svg } from "../../assets/linechart.svg";
 
 const Statistic = () => {
   const [temperature, setTemperature] = useState(null);
@@ -70,6 +71,7 @@ const Statistic = () => {
             <i className="fa-solid fa-chevron-down"></i>
           </div>
         </div>
+        {/* <Svg></Svg> */}
         <img src={chartImg} alt="graph" />
       </div>
       <div className="temp-hum grid-container">
@@ -78,14 +80,14 @@ const Statistic = () => {
           <span className="param">
             {temperature !== null ? `+ ${temperature}°C` : "..."}
           </span>
-          <i className="fa-solid fa-temperature-quarter"></i>
+          <i className="fa-solid fa-snowflake"> </i>
         </div>
         <div className="hum grid-item">
           <span>Humidity</span>
           <span className="param">
             {humidity !== null ? `${humidity}%` : "..."}
           </span>
-          <i className="fa-solid fa-water"></i>
+          <i className="fa-solid fa-cloud-showers-water"></i>
         </div>
       </div>
       <div className="weather">

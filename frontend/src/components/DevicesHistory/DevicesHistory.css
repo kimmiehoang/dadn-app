@@ -1,11 +1,11 @@
 .devices-history {
   width: 100%;
-  margin-top: 16px;
+  margin-top: 30px;
 }
 .devices-history h5 {
   color: var(--lightblue);
   font-weight: 600;
-  margin-bottom: 6px;
+  margin-bottom: 20px;
 }
 .devices-history ul {
   list-style: none;
@@ -23,10 +23,14 @@
 }
 
 .devices-history li i {
-  font-size: 64px;
+  font-size: 80px;
   display: block;
 }
 
 .devices-history li:hover i{
   opacity: 0.8;
+}
+
+span {
+  font-size:large;
 }

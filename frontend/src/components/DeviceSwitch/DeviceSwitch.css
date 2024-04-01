@@ -9,6 +9,8 @@
 .device-switch span {
   margin-left: 16px;
   display: block;
+  font-weight: bold;
+  font-size: medium;
 }
 
 .device-switch > div {

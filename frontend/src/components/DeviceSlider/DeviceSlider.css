@@ -9,6 +9,8 @@
 .device-slider .custom-label {
   margin-left: 16px;
   display: block;
+  font-weight: bold;
+  font-size: medium;
 }
 
 .device-slider > div {
