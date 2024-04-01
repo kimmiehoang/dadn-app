@@ -24,7 +24,7 @@ function SignInBox() {
 
     const { email, password } = state;
 
-    console.log(state);
+    //console.log(state);
 
     const userData = {
       email,

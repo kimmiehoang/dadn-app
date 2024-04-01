@@ -7,7 +7,7 @@ const userController = new UserController();
 // userRouter.get('/list', userController.getUsers);
 // userRouter.post('/create', userController.createUser);
 userRouter.get('/:email', userController.getUserByEmail);
-// userRouter.put('/:id', userController.updateUser); //not done
+userRouter.post('/update', userController.updateUser);
 // userRouter.delete('/:id', userController.deleteUser); //not done
 userRouter.post('/signin', userController.login);
 

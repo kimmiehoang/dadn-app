@@ -2,7 +2,7 @@
   width: 100%;
   margin-top: 16px;
 }
-.devices-history p {
+.devices-history h5 {
   color: var(--lightblue);
   font-weight: 600;
   margin-bottom: 6px;

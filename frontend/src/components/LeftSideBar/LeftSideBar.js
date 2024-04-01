@@ -7,8 +7,9 @@ import axios from "axios";
 const LeftSideBar = ({ mode, onChangeMode }) => {
   const navigate = useNavigate();
   const cookies = new Cookies();
-  const [name, setName] = useState(""); // State để lưu tên người dùng
+  const [name, setName] = useState("");
   const [avt, setAvt] = useState("");
+  const [update, setUpdate] = useState(false);
 
   const imageUrl =
     "https://t4.ftcdn.net/jpg/02/66/72/41/360_F_266724172_Iy8gdKgMa7XmrhYYxLCxyhx6J7070Pr8.jpg";
@@ -44,7 +45,7 @@ const LeftSideBar = ({ mode, onChangeMode }) => {
     };
 
     fetchData();
-  }, [cookies]); // Thêm cookies vào dependency để useEffect chạy lại khi có thay đổi
+  }, [cookies, update]); // Thêm cookies vào dependency để useEffect chạy lại khi có thay đổi
 
   return (
     <div className="leftSideBar">

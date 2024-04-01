@@ -28,7 +28,8 @@
   width: 160px;
   height: 160px;
   border-radius: 50%;
-  box-shadow: 0px 0px 18px gray;
+  box-shadow: 0px 0px 20px rgb(181, 181, 181);
+  object-fit: cover;
 }
 .profile-avatar span {
   color: var(--lightblue);
@@ -45,8 +46,6 @@
 }
 .profile-input .name {
   display: flex;
-  padding-bottom: 28px;
-  border-bottom: 1px solid gray;
 }
 .profile-input .fname {
   width: 50%;
