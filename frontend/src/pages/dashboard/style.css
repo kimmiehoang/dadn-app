@@ -12,6 +12,7 @@
 
 .main-board .welcome-text span {
   color: var(--lightblue);
+  font-size: x-large;
 }
 
 .main-board .welcome-text h2 {

@@ -25,8 +25,15 @@ export default function App() {
         <Route index element={<SignIn />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/userProfile" element={<UserProfile />} />
+        <Route
+          path="/dashboard"
+          element={
+            <Protected isLoggedIn={isLoggedIn}>
+              <Dashboard />
+            </Protected>
+          }
+        />
+        {/* <Route path="/userProfile" element={<UserProfile />} /> */}
 
         {/* handle error */}
         <Route path="*" element={<h1>Page Not Found</h1>} />

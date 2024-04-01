@@ -23,7 +23,7 @@ const Dashboard = () => {
   const [checkedAutoLight, setCheckedAutoLight] = useState(false);
   const [checkedAutoAir, setCheckedAutoAir] = useState(false);
   const clickedDeviceType = useRef("");
-  const AIOkey = "aio_rYuu499vi5lvUQeMevSF43xynz87";
+  const AIOkey = "aio_HLSe66suyKEAELqWDTOnhYWVLLGL";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,24 +32,20 @@ const Dashboard = () => {
           "https://io.adafruit.com/api/v2/tienhoang/feeds/bbc-led/data?limit=1"
         );
         const dataLed = responseLed.data;
-        //console.log(dataLed[0].value);
+
         if (dataLed[0].value == 1) setCheckedLight(true);
         else setCheckedLight(false);
-        // setCheckedLight(dataLed[0].value);
 
         const responseAir = await axios.get(
           "https://io.adafruit.com/api/v2/tienhoang/feeds/bbc-fan/data?limit=1"
         );
         const dataAir = responseAir.data;
-        // console.log(dataAir[0].value);
         setCheckedAir(parseInt(dataAir[0].value));
-        //console.log(checkedAir);
 
         const responseAutoLed = await axios.get(
           "https://io.adafruit.com/api/v2/tienhoang/feeds/bbc-auto-led/data?limit=1"
         );
         const dataAutoLed = responseAutoLed.data;
-        // setCheckedAutoLight(dataAutoLed[0].value);
         if (dataAutoLed[0].value == 1) setCheckedAutoLight(true);
         else setCheckedAutoLight(false);
 
@@ -57,7 +53,6 @@ const Dashboard = () => {
           "https://io.adafruit.com/api/v2/tienhoang/feeds/bbc-auto-fan/data?limit=1"
         );
         const dataAutoAir = responseAutoAir.data;
-        //setCheckedAutoAir(dataAutoAir[0].value);
         if (dataAutoAir[0].value == 1) setCheckedAutoAir(true);
         else setCheckedAutoAir(false);
 
@@ -65,7 +60,6 @@ const Dashboard = () => {
           "https://io.adafruit.com/api/v2/tienhoang/feeds/bbc-door/data?limit=1"
         );
         const dataFrontDoor = responseFrontDoor.data;
-        //setCheckedFront(dataFrontDoor[0].value);
         if (dataFrontDoor[0].value == 1) setCheckedFront(true);
         else setCheckedFront(false);
       } catch (error) {
@@ -73,7 +67,6 @@ const Dashboard = () => {
       }
     };
 
-    // Gọi hàm fetchData khi component được load
     fetchData();
   }, []);
 
@@ -87,10 +80,9 @@ const Dashboard = () => {
         const response = await axios.get(
           `http://localhost:5000/users/${email}`
         );
-        //console.log(response.data);
         const userData = response.data;
         const fullName = `${userData.firstName} ${userData.lastName}`;
-        setName(fullName); // Cập nhật tên người dùng vào state
+        setName(fullName);
       } catch (error) {
         console.error("Error fetching user by email:", error);
       }
@@ -117,12 +109,10 @@ const Dashboard = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            "X-AIO-Key": AIOkey, // Thay thế bằng API Key của bạn từ Adafruit
+            "X-AIO-Key": AIOkey,
           },
         }
       );
-
-      //console.log("Response from Adafruit:", response.data);
     } catch (error) {
       console.error("Error sending data to Adafruit:", error);
     }
@@ -150,12 +140,10 @@ const Dashboard = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            "X-AIO-Key": AIOkey, // Thay thế bằng API Key của bạn từ Adafruit
+            "X-AIO-Key": AIOkey,
           },
         }
       );
-
-      //console.log("Response from Adafruit:", response.data);
     } catch (error) {
       console.error("Error sending data to Adafruit:", error);
     }
@@ -172,11 +160,10 @@ const Dashboard = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            "X-AIO-Key": AIOkey, // Thay thế bằng API Key của bạn từ Adafruit
+            "X-AIO-Key": AIOkey,
           },
         }
       );
-      //console.log("Response from Adafruit:", response.data);
     } catch (error) {
       console.error("Error sending data to Adafruit:", error);
     }
@@ -200,12 +187,10 @@ const Dashboard = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            "X-AIO-Key": AIOkey, // Thay thế bằng API Key của bạn từ Adafruit
+            "X-AIO-Key": AIOkey,
           },
         }
       );
-
-      //console.log("Response from Adafruit:", response.data);
     } catch (error) {
       console.error("Error sending data to Adafruit:", error);
     }
@@ -229,12 +214,10 @@ const Dashboard = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            "X-AIO-Key": AIOkey, // Thay thế bằng API Key của bạn từ Adafruit
+            "X-AIO-Key": AIOkey,
           },
         }
       );
-
-      //console.log("Response from Adafruit:", response.data);
     } catch (error) {
       console.error("Error sending data to Adafruit:", error);
     }
@@ -266,7 +249,7 @@ const Dashboard = () => {
                 />
                 <DeviceSwitch
                   label="Auto lighting mode"
-                  type="light"
+                  type="autoLight"
                   status={checkedAutoLight}
                   onSwitch={handleChangeAutoLight}
                 />
@@ -286,7 +269,7 @@ const Dashboard = () => {
                 />
                 <DeviceSwitch
                   label="Auto air-conditioning mode"
-                  type="airConditioner"
+                  type="autoAirConditioner"
                   status={checkedAutoAir}
                   onSwitch={handleChangeAutoAir}
                 />

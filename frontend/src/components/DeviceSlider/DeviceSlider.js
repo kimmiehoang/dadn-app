@@ -25,7 +25,7 @@ const DeviceSlider = ({ label, type, value, onChangeSlider }) => {
           marks
           max={75}
           style={{ width: "40%" }}
-          onChangeCommitted={handleSliderChange} // Sử dụng onChangeCommitted thay vì onChange
+          onChangeCommitted={handleSliderChange}
         />
       </div>
     </div>
