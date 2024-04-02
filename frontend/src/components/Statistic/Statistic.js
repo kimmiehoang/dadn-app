@@ -15,7 +15,6 @@ const Statistic = () => {
         const response = await axios.get(
           "https://io.adafruit.com/api/v2/tienhoang/feeds/bbc-temp/data?limit=1"
         );
-        //console.log(response);
         const data = response.data;
         setTemperature(data[0].value);
       } catch (error) {
@@ -23,13 +22,10 @@ const Statistic = () => {
       }
     };
 
-    // Gọi fetchData ngay sau khi component được mount
     fetchData();
 
-    // Thiết lập interval để gọi fetchData mỗi 10 giây
     const intervalId = setInterval(fetchData, 10000);
 
-    // Xóa interval khi component unmount
     return () => clearInterval(intervalId);
   }, []);
 
@@ -39,7 +35,6 @@ const Statistic = () => {
         const response = await axios.get(
           "https://io.adafruit.com/api/v2/tienhoang/feeds/bbc-humid/data?limit=1"
         );
-        //console.log(response);
         const data = response.data;
         setHumidity(data[0].value);
       } catch (error) {
@@ -47,13 +42,10 @@ const Statistic = () => {
       }
     };
 
-    // Gọi fetchData ngay sau khi component được mount
     fetchData();
 
-    // Thiết lập interval để gọi fetchData mỗi 10 giây
     const intervalId = setInterval(fetchData, 10000);
 
-    // Xóa interval khi component unmount
     return () => clearInterval(intervalId);
   }, []);
 
@@ -71,7 +63,6 @@ const Statistic = () => {
             <i className="fa-solid fa-chevron-down"></i>
           </div>
         </div>
-        {/* <Svg></Svg> */}
         <img src={chartImg} alt="graph" />
       </div>
       <div className="temp-hum grid-container">

@@ -5,7 +5,6 @@ import mongoose from 'mongoose';
 
 class UserController {
   async login(req, res) {
-    console.log(req.body);
     const { email, password } = req.body;
 
     try {
@@ -14,7 +13,6 @@ class UserController {
         return res.status(401).json({ message: 'Invalid email or password' });
       }
 
-      // Kiểm tra mật khẩu
       const isMatch = user.password == password;
       if (!isMatch) {
         return res.status(401).json({ message: 'Invalid email or password' });
@@ -23,12 +21,8 @@ class UserController {
       if (isMatch) {
         let key = 'dadn232';
 
-        //var payload = email;
-        //console.log(user.email);
         var tokenResult = cookieController.encodeCookie(user.email, key);
-        console.log(tokenResult);
 
-        // Đăng nhập thành công
         res.status(200).json({ success: true, token: tokenResult });
       } else {
         res.status(401).json({ success: false, message: 'Wrong password' });
@@ -68,7 +62,6 @@ class UserController {
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
-      //console.log(user);
       res.status(200).json(user);
     } catch (error) {
       console.error('Error fetching user:', error);
@@ -78,11 +71,9 @@ class UserController {
 
   async updateUser(req, res) {
     const newData = req.body;
-    console.log(newData);
     const filter = { email: newData.email };
     try {
       const user = await User.findOneAndUpdate(filter, newData, { new: true });
-      console.log(user); // Kiểm tra giá trị của user
 
       if (!user) {
         return res.status(404).json({ message: 'User not found after update' });
@@ -93,20 +84,6 @@ class UserController {
       res.status(500).json({ message: 'Server error' });
     }
   }
-
-  // async deleteUser(req, res) {
-  //   const { id } = req.params;
-  //   try {
-  //     const user = await User.findByIdAndDelete(id);
-  //     if (!user) {
-  //       return res.status(404).json({ message: 'User not found' });
-  //     }
-  //     res.status(200).json({ message: 'User deleted', user: user });
-  //   } catch (error) {
-  //     console.error('Error deleting user:', error);
-  //     res.status(500).json({ message: 'Server error' });
-  //   }
-  // }
 }
 
 export default UserController;

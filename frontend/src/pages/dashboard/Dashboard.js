@@ -23,7 +23,8 @@ const Dashboard = () => {
   const [checkedAutoLight, setCheckedAutoLight] = useState(false);
   const [checkedAutoAir, setCheckedAutoAir] = useState(false);
   const clickedDeviceType = useRef("");
-  const AIOkey = "aio_HLSe66suyKEAELqWDTOnhYWVLLGL";
+  const [updateLeftSideBar, setUpdateLeftSideBar] = useState(0);
+  const AIOkey = "";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -227,9 +228,18 @@ const Dashboard = () => {
     clickedDeviceType.current = type;
     setMode("history");
   };
+
+  const handleUpdateLeftSideBar = async (state) => {
+    setUpdateLeftSideBar((prevState) => prevState + parseInt(state, 10));
+  };
+
   return (
     <div className="dashboard">
-      <LeftSideBar mode={mode} onChangeMode={setMode} />
+      <LeftSideBar
+        mode={mode}
+        onChangeMode={setMode}
+        update={updateLeftSideBar}
+      />
       {mode === "dashboard" && (
         <>
           <div className="main-board">
@@ -286,7 +296,12 @@ const Dashboard = () => {
           <Statistic />
         </>
       )}
-      {mode === "setting" && <ProfileBox />}
+      {mode === "setting" && (
+        <ProfileBox
+          updateLeftSide={handleUpdateLeftSideBar}
+          update={updateLeftSideBar}
+        />
+      )}
       {mode === "history" && <History deviceType={clickedDeviceType.current} />}
     </div>
   );

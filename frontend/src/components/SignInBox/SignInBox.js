@@ -24,8 +24,6 @@ function SignInBox() {
 
     const { email, password } = state;
 
-    //console.log(state);
-
     const userData = {
       email,
       password,
@@ -46,12 +44,10 @@ function SignInBox() {
       });
 
       const data = await response.json();
-      //console.log(data);
       if (data.success == true) {
         const cookie = new Cookie();
         cookie.set("token", data.token, { path: "/" });
         cookie.set("isLogged", data.success, { path: "/" });
-        //console.log(cookie);
         navigate("/dashboard");
       }
     } catch (error) {

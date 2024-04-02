@@ -16,7 +16,7 @@ const History = ({ deviceType }) => {
     const hour = createdAtDate.getHours();
     const minute = createdAtDate.getMinutes();
     const day = createdAtDate.getDate();
-    const month = createdAtDate.getMonth() + 1; // Tháng bắt đầu từ 0
+    const month = createdAtDate.getMonth() + 1;
     const year = createdAtDate.getFullYear();
     return { hour, minute, day, month, year };
   };
@@ -25,26 +25,25 @@ const History = ({ deviceType }) => {
     var url;
     if (deviceType == "light") {
       url =
-        "https://io.adafruit.com/api/v2/tienhoang/feeds/bbc-led/data?limit=20";
+        "https://io.adafruit.com/api/v2/tienhoang/feeds/bbc-led/data?limit=17";
     } else if (deviceType == "airConditioner") {
       url =
-        "https://io.adafruit.com/api/v2/tienhoang/feeds/bbc-fan/data?limit=20";
+        "https://io.adafruit.com/api/v2/tienhoang/feeds/bbc-fan/data?limit=17";
     } else if (deviceType == "door") {
       url =
-        "https://io.adafruit.com/api/v2/tienhoang/feeds/bbc-door/data?limit=20";
+        "https://io.adafruit.com/api/v2/tienhoang/feeds/bbc-door/data?limit=17";
     }
     const fetchHistoryData = async () => {
       try {
-        const response = await axios.get(url); // Thay thế 'http://your-api-url/history' bằng URL API của bạn
-        setHistoryData(response.data); // Set dữ liệu nhận được vào state
-        console.log(historyData);
+        const response = await axios.get(url);
+        setHistoryData(response.data);
       } catch (error) {
         console.error("Error fetching history data:", error);
       }
     };
 
-    fetchHistoryData(); // Gọi hàm lấy dữ liệu khi component được mount
-  }, []); // Dependencies rỗng để chỉ gọi một lần khi component mount
+    fetchHistoryData();
+  }, []);
 
   return (
     <div className="device-history">
