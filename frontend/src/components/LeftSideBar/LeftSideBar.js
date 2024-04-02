@@ -4,21 +4,20 @@ import "./leftSideBar.css";
 import Cookies from "universal-cookie";
 import axios from "axios";
 
-const LeftSideBar = ({ mode, onChangeMode }) => {
+const LeftSideBar = ({ mode, onChangeMode, update }) => {
   const navigate = useNavigate();
   const cookies = new Cookies();
   const [name, setName] = useState("");
   const [avt, setAvt] = useState("");
-  const [update, setUpdate] = useState(false);
+  const [updateTrigger, setUpdateTrigger] = useState(false);
 
   const imageUrl =
     "https://t4.ftcdn.net/jpg/02/66/72/41/360_F_266724172_Iy8gdKgMa7XmrhYYxLCxyhx6J7070Pr8.jpg";
 
   const handleIconClick = () => {
-    if (window.confirm("Bạn có chắc chắn muốn đăng xuất?")) {
+    if (window.confirm("Do you want to log out?")) {
       cookies.remove("token");
       cookies.remove("isLogged");
-      console.log(cookies);
       navigate("/signin");
     }
   };
@@ -33,11 +32,9 @@ const LeftSideBar = ({ mode, onChangeMode }) => {
         const response = await axios.get(
           `http://localhost:5000/users/${email}`
         );
-        //console.log(response.data);
         const userData = response.data;
         const fullName = `${userData.firstName} ${userData.lastName}`;
-        //console.log(fullName);
-        setName(fullName); // Cập nhật tên người dùng vào state
+        setName(fullName);
         setAvt(userData.avtLink);
       } catch (error) {
         console.error("Error fetching user by email:", error);
@@ -45,7 +42,11 @@ const LeftSideBar = ({ mode, onChangeMode }) => {
     };
 
     fetchData();
-  }, [cookies, update]); // Thêm cookies vào dependency để useEffect chạy lại khi có thay đổi
+  }, [cookies]);
+
+  useEffect(() => {
+    setUpdateTrigger((prev) => !prev);
+  }, [update]);
 
   return (
     <div className="leftSideBar">

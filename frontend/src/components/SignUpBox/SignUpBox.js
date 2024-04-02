@@ -22,7 +22,6 @@ function SignUpBox() {
 
     const { email, password, confirmPassword } = state;
 
-    // Chuẩn bị dữ liệu để gửi lên API
     const formData = new FormData();
     formData.append("email", email);
     formData.append("password", password);
@@ -37,19 +36,13 @@ function SignUpBox() {
         throw new Error("Failed to sign in");
       }
 
-      // Đặt lại trạng thái form sau khi submit thành công
       setState({
         email: "",
         password: "",
         confirmPassword: "",
       });
-
-      // Xử lý kết quả từ API nếu cần
-
-      // Chuyển hướng hoặc thực hiện các hành động khác sau khi đăng ký thành công
     } catch (error) {
       console.error("Error signing up:", error.message);
-      // Xử lý lỗi nếu cần
     }
   };
 

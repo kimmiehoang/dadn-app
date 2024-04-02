@@ -8,7 +8,7 @@ const DeviceSlider = ({ label, type, value, onChangeSlider }) => {
   };
 
   const handleSliderChange = (event, newValue) => {
-    onChangeSlider(newValue); // Call parent component's onChangeSlider function
+    onChangeSlider(newValue);
   };
 
   return (

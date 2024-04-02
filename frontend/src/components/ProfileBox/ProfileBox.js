@@ -4,7 +4,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Cookies from "universal-cookie";
 
-const ProfileBox = () => {
+const ProfileBox = ({ updateLeftSide }, update) => {
   const [avt, setAvt] = useState("");
   const cookies = new Cookies();
   const token = cookies.get("token");
@@ -49,15 +49,11 @@ const ProfileBox = () => {
 
     const { firstName, lastName } = state;
 
-    console.log(state);
-
     const userData = {
       firstName,
       lastName,
       email: email,
     };
-
-    console.log(userData);
 
     try {
       const response = await fetch("http://localhost:5000/users/update", {
@@ -69,13 +65,16 @@ const ProfileBox = () => {
       });
 
       const data = await response.json();
-      //console.log(data);
       if (data.success == true) {
         window.alert(data.message);
       }
     } catch (error) {
       console.error("Error signing in:", error.message);
     }
+  };
+
+  const handleSaveButtonClicked = async () => {
+    updateLeftSide(parseInt(1));
   };
 
   return (
@@ -94,9 +93,8 @@ const ProfileBox = () => {
               <br />
               <input
                 type="text"
-                //placeholder={state.firstName}
                 value={state.firstName}
-                name="firstName" // Đặt name cho input
+                name="firstName"
                 onChange={handleChange}
               />
             </div>
@@ -105,9 +103,8 @@ const ProfileBox = () => {
               <br />
               <input
                 type="text"
-                //placeholder={state.lastName}
                 value={state.lastName}
-                name="lastName" // Đặt name cho input
+                name="lastName"
                 onChange={handleChange}
               />
             </div>
@@ -119,8 +116,11 @@ const ProfileBox = () => {
           </div>
         </div>
         <div className="profile-buttons">
-          <button>Cancel</button>
-          <button className="save" type="submit">
+          <button
+            className="save"
+            type="submit"
+            onClick={handleSaveButtonClicked}
+          >
             Save
           </button>
         </div>
