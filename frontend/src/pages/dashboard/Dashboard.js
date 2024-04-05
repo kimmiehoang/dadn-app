@@ -9,10 +9,12 @@ import ProfileBox from "../../components/ProfileBox";
 import History from "../../components/History";
 import Cookies from "universal-cookie";
 import axios from "axios";
-
+import socketIOClient from "socket.io-client";
 import "./style.css";
 
 const Dashboard = () => {
+  const ENDPOINT = "http://localhost:5000";
+
   const cookies = new Cookies();
   const [name, setName] = useState("");
   const [mode, setMode] = useState("dashboard");
@@ -70,9 +72,21 @@ const Dashboard = () => {
 
     fetchData();
 
-    const intervalId = setInterval(fetchData, 3000);
+    // const intervalId = setInterval(fetchData, 3000);
+    // return () => clearInterval(intervalId);
+  }, []);
 
-    return () => clearInterval(intervalId);
+  useEffect(() => {
+    const socket = socketIOClient(ENDPOINT);
+
+    socket.on("dataFromServer", (message) => {
+      if (message.topic == "tienhoang/feeds/bbc-led")
+        setCheckedLight(message.data);
+      else if (message.topic == "tienhoang/feeds/bbc-fan")
+        setCheckedAir(message.data);
+    });
+
+    return () => socket.disconnect();
   }, []);
 
   useEffect(() => {
