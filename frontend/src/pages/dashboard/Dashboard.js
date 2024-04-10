@@ -84,6 +84,17 @@ const Dashboard = () => {
         setCheckedLight(message.data);
       else if (message.topic == "tienhoang/feeds/bbc-fan")
         setCheckedAir(message.data);
+      else if (message.topic == "tienhoang/feeds/bbc-temp") {
+        if (message.data <= 25) {
+          handleChangeAir(0);
+        } else if (message.data <= 28) {
+          handleChangeAir(25);
+        } else if (message.data <= 32) {
+          handleChangeAir(50);
+        } else if (message.data > 32) {
+          handleChangeAir(75);
+        }
+      }
     });
 
     return () => socket.disconnect();

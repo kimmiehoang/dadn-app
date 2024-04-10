@@ -43,6 +43,7 @@ client.on('connect', () => {
   console.log('Connected to MQTT broker');
   client.subscribe('tienhoang/feeds/bbc-led');
   client.subscribe('tienhoang/feeds/bbc-fan');
+  client.subscribe('tienhoang/feeds/bbc-temp');
 });
 
 io.on('connection', (socket) => {

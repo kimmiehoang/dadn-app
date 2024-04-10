@@ -7,8 +7,9 @@ const userSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     avtLink: { type: String },
+    home: [{ type: String }],
   },
-  { collection: 'user' }
+  { collection: 'users' }
 );
 
 const User = mongoose.model('User', userSchema);
