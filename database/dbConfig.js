@@ -23,10 +23,16 @@ async function createDatabaseAndCollection() {
       {
         homeName: "myhome1",
         address: "123 Avenue Street, New York, USA",
+        owner: ["johndoe@gmail.com"],
+        userAdafruit: "tienhoang",
+        key: "",
       },
       {
         homeName: "myhome2",
         address: "456 Dixon Street, Texas, USA",
+        owner: ["johndoe@gmail.com", "janesmith@gmail.com"],
+        userAdafruit: "tienhoang",
+        key: "",
       },
     ]);
 
