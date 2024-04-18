@@ -29,7 +29,7 @@ const Dashboard = () => {
   const [updateLeftSideBar, setUpdateLeftSideBar] = useState(0);
   const [homes, setHomes] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
-  const [AIOkey, setAIOkey] = useState(`aio_tJGS92HduSZ63KOlm4hEJeah86N4`);
+  const [AIOkey, setAIOkey] = useState(``);
   const [adafruitUsername, setAdafruitUsername] = useState(`tienhoang`);
 
   const customStyles = {
