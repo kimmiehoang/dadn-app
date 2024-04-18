@@ -31,3 +31,19 @@
 h1, h3 {
 font-weight: bolder;
 }
+
+.my-smart-home {
+  font-size: 36px;
+  color: #5640DC;
+}
+
+.setting {
+  width: calc(100% * (5 / 6));
+}
+
+.home-setting {
+  font-weight: bold;
+  color: var(--lightblue);
+  margin-top: 32px;
+  margin-left: 2.1%;
+}

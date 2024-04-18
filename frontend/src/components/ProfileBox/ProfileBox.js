@@ -1,5 +1,4 @@
 import "./ProfileBox.css";
-import catImg from "../../assets/images/cat.jpg";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Cookies from "universal-cookie";

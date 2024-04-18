@@ -65,27 +65,51 @@ async function createDatabaseAndCollection() {
     await usersCollection.insertMany([
       {
         deviceName: "air-conditioner1",
+        deviceType: "air-conditioner",
         homeName: "myhome1",
         autoDevice: true,
         deviceValue: [0, 25, 50, 75],
-        deviceSettings: [{ tempThreshold: [25, 30, 35] }],
+        deviceSettings: {
+          tempThresholdLow: 25,
+          tempThresholdAverage: 30,
+          tempThresholdHigh: 35,
+        },
+      },
+      {
+        deviceName: "air-conditioner2",
+        deviceType: "air-conditioner",
+        homeName: "myhome1",
+        autoDevice: true,
+        deviceValue: [0, 25, 50, 75],
+        deviceSettings: {
+          tempThresholdLow: 25,
+          tempThresholdAverage: 30,
+          tempThresholdHigh: 35,
+        },
       },
       {
         deviceName: "light1",
         homeName: "myhome1",
+        deviceType: "light",
         autoDevice: true,
         deviceValue: [0, 1],
         deviceSettings: [],
       },
       {
         deviceName: "air-conditioner1",
+        deviceType: "air-conditioner",
         homeName: "myhome2",
         autoDevice: true,
         deviceValue: [0, 25, 50, 75],
-        deviceSettings: [],
+        deviceSettings: {
+          tempThresholdLow: 25,
+          tempThresholdAverage: 30,
+          tempThresholdHigh: 35,
+        },
       },
       {
         deviceName: "light1",
+        deviceType: "light",
         homeName: "myhome2",
         autoDevice: true,
         deviceValue: [0, 1],

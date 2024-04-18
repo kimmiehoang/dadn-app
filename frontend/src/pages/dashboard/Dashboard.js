@@ -6,85 +6,130 @@ import DeviceSlider from "../../components/DeviceSlider";
 import Door from "../../components/Door";
 import DevicesHistory from "../../components/DevicesHistory";
 import ProfileBox from "../../components/ProfileBox";
+import HomeSettingBox from "../../components/HomeSettingBox";
 import History from "../../components/History";
 import Cookies from "universal-cookie";
 import axios from "axios";
 import socketIOClient from "socket.io-client";
 import "./style.css";
+import Select from "react-select";
+const cookies = new Cookies();
+const ENDPOINT = "http://localhost:5000";
 
 const Dashboard = () => {
-  const ENDPOINT = "http://localhost:5000";
-
-  const cookies = new Cookies();
   const [name, setName] = useState("");
   const [mode, setMode] = useState("dashboard");
-  const [checkedFront, setCheckedFront] = useState(false);
-  const [checkedBack, setCheckedBack] = useState(false);
-  const [checkedLight, setCheckedLight] = useState(false);
+  const [checkedFront, setCheckedFront] = useState(0);
+  const [checkedBack, setCheckedBack] = useState(0);
+  const [checkedLight, setCheckedLight] = useState(0);
   const [checkedAir, setCheckedAir] = useState(0);
-  const [checkedAutoLight, setCheckedAutoLight] = useState(false);
-  const [checkedAutoAir, setCheckedAutoAir] = useState(false);
+  const [checkedAutoLight, setCheckedAutoLight] = useState(0);
+  const [checkedAutoAir, setCheckedAutoAir] = useState(0);
   const clickedDeviceType = useRef("");
   const [updateLeftSideBar, setUpdateLeftSideBar] = useState(0);
-  const AIOkey = "";
+  const [homes, setHomes] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [AIOkey, setAIOkey] = useState(`aio_tJGS92HduSZ63KOlm4hEJeah86N4`);
+  const [adafruitUsername, setAdafruitUsername] = useState(`tienhoang`);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const responseLed = await axios.get(
-          "https://io.adafruit.com/api/v2/tienhoang/feeds/bbc-led/data?limit=1"
-        );
-        const dataLed = responseLed.data;
+  const customStyles = {
+    control: (base) => ({
+      ...base,
+      minHeight: 50,
+    }),
+  };
 
-        if (dataLed[0].value == 1) setCheckedLight(true);
-        else setCheckedLight(false);
+  const theme = (theme) => ({
+    ...theme,
+    colors: {
+      ...theme.colors,
+      primary25: "#f3f3f3",
+      primary: "#5640DC",
 
-        const responseAir = await axios.get(
-          "https://io.adafruit.com/api/v2/tienhoang/feeds/bbc-fan/data?limit=1"
-        );
-        const dataAir = responseAir.data;
-        setCheckedAir(parseInt(dataAir[0].value));
+      // All possible overrides
+      // primary: '#2684FF',
+      // primary75: '#4C9AFF',
+      // primary50: '#B2D4FF',
+      // primary25: '#DEEBFF',
 
-        const responseAutoLed = await axios.get(
-          "https://io.adafruit.com/api/v2/tienhoang/feeds/bbc-auto-led/data?limit=1"
-        );
-        const dataAutoLed = responseAutoLed.data;
-        if (dataAutoLed[0].value == 1) setCheckedAutoLight(true);
-        else setCheckedAutoLight(false);
+      // danger: '#DE350B',
+      // dangerLight: '#FFBDAD',
 
-        const responseAutoAir = await axios.get(
-          "https://io.adafruit.com/api/v2/tienhoang/feeds/bbc-auto-fan/data?limit=1"
-        );
-        const dataAutoAir = responseAutoAir.data;
-        if (dataAutoAir[0].value == 1) setCheckedAutoAir(true);
-        else setCheckedAutoAir(false);
+      // neutral0: 'hsl(0, 0%, 100%)',
+      // neutral5: 'hsl(0, 0%, 95%)',
+      // neutral10: 'hsl(0, 0%, 90%)',
+      // neutral20: 'hsl(0, 0%, 80%)',
+      // neutral30: 'hsl(0, 0%, 70%)',
+      // neutral40: 'hsl(0, 0%, 60%)',
+      // neutral50: 'hsl(0, 0%, 50%)',
+      // neutral60: 'hsl(0, 0%, 40%)',
+      // neutral70: 'hsl(0, 0%, 30%)',
+      // neutral80: 'hsl(0, 0%, 20%)',
+      // neutral90: 'hsl(0, 0%, 10%)',
+    },
+    // Other options you can use
+    borderRadius: 10,
+    // baseUnit: 4,
+    // controlHeight: 500,
+    // menuGutter: baseUnit * 2
+  });
+  const handleSelectChange = async (selectedOption) => {
+    setSelectedOption(selectedOption);
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/homes/${selectedOption.value}`
+      );
+      setAdafruitUsername(response.data.data.userAdafruit);
+      setAIOkey(response.data.data.key);
 
-        const responseFrontDoor = await axios.get(
-          "https://io.adafruit.com/api/v2/tienhoang/feeds/bbc-door/data?limit=1"
-        );
-        const dataFrontDoor = responseFrontDoor.data;
-        if (dataFrontDoor[0].value == 1) setCheckedFront(true);
-        else setCheckedFront(false);
-      } catch (error) {
-        console.error("Error fetching data from Adafruit:", error);
-      }
-    };
+      const responseLed = await axios.get(
+        `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-led/data?limit=1`
+      );
+      const dataLed = responseLed.data;
 
-    fetchData();
+      if (dataLed[0].value == 1) setCheckedLight(true);
+      else setCheckedLight(false);
 
-    // const intervalId = setInterval(fetchData, 3000);
-    // return () => clearInterval(intervalId);
-  }, []);
+      const responseAir = await axios.get(
+        `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-fan/data?limit=1`
+      );
+      const dataAir = responseAir.data;
+      setCheckedAir(parseInt(dataAir[0].value));
+
+      const responseAutoLed = await axios.get(
+        `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-auto-led/data?limit=1`
+      );
+      const dataAutoLed = responseAutoLed.data;
+      if (dataAutoLed[0].value == 1) setCheckedAutoLight(true);
+      else setCheckedAutoLight(false);
+
+      const responseAutoAir = await axios.get(
+        `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-auto-fan/data?limit=1`
+      );
+      const dataAutoAir = responseAutoAir.data;
+      if (dataAutoAir[0].value == 1) setCheckedAutoAir(true);
+      else setCheckedAutoAir(false);
+
+      const responseFrontDoor = await axios.get(
+        `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-door/data?limit=1`
+      );
+      const dataFrontDoor = responseFrontDoor.data;
+      if (dataFrontDoor[0].value == 1) setCheckedFront(true);
+      else setCheckedFront(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     const socket = socketIOClient(ENDPOINT);
 
     socket.on("dataFromServer", (message) => {
-      if (message.topic == "tienhoang/feeds/bbc-led")
+      if (message.topic == `${adafruitUsername}/feeds/bbc-led`)
         setCheckedLight(message.data);
-      else if (message.topic == "tienhoang/feeds/bbc-fan")
+      else if (message.topic == `${adafruitUsername}/feeds/bbc-fan`)
         setCheckedAir(message.data);
-      else if (message.topic == "tienhoang/feeds/bbc-temp") {
+      else if (message.topic == `${adafruitUsername}/feeds/bbc-temp`) {
         if (message.data <= 25) {
           handleChangeAir(0);
         } else if (message.data <= 28) {
@@ -105,7 +150,7 @@ const Dashboard = () => {
     const parts = token.split("232123456");
     const email = parts[0];
 
-    const fetchData = async () => {
+    const fetchData2 = async () => {
       try {
         const response = await axios.get(
           `http://localhost:5000/users/${email}`
@@ -113,12 +158,17 @@ const Dashboard = () => {
         const userData = response.data;
         const fullName = `${userData.firstName} ${userData.lastName}`;
         setName(fullName);
+        const options = userData.home.map((home, index) => ({
+          label: home,
+          value: home,
+        }));
+        setHomes(options);
       } catch (error) {
         console.error("Error fetching user by email:", error);
       }
     };
 
-    fetchData();
+    fetchData2();
   }, [cookies]);
 
   const handleChangeFront = async (nextChecked) => {
@@ -132,7 +182,7 @@ const Dashboard = () => {
     }
     try {
       const response = await axios.post(
-        "https://io.adafruit.com/api/v2/tienhoang/feeds/bbc-door/data",
+        `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-door/data`,
         {
           value: data,
         },
@@ -163,7 +213,7 @@ const Dashboard = () => {
     }
     try {
       const response = await axios.post(
-        "https://io.adafruit.com/api/v2/tienhoang/feeds/bbc-led/data",
+        `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-led/data`,
         {
           value: data,
         },
@@ -183,7 +233,7 @@ const Dashboard = () => {
     setCheckedAir(nextChecked);
     try {
       const response = await axios.post(
-        "https://io.adafruit.com/api/v2/tienhoang/feeds/bbc-fan/data",
+        `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-fan/data`,
         {
           value: nextChecked,
         },
@@ -210,7 +260,7 @@ const Dashboard = () => {
     }
     try {
       const response = await axios.post(
-        "https://io.adafruit.com/api/v2/tienhoang/feeds/bbc-auto-led/data",
+        `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-auto-led/data`,
         {
           value: data,
         },
@@ -237,7 +287,7 @@ const Dashboard = () => {
     }
     try {
       const response = await axios.post(
-        "https://io.adafruit.com/api/v2/tienhoang/feeds/bbc-auto-fan/data",
+        `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-auto-fan/data`,
         {
           value: data,
         },
@@ -280,6 +330,8 @@ const Dashboard = () => {
             </div>
             <div className="body d-flex">
               <div className="w-50">
+                <h3 className="my-smart-home">My smart home</h3>
+                <br></br>
                 <DeviceSwitch
                   label="Light"
                   type="light"
@@ -300,6 +352,15 @@ const Dashboard = () => {
                 />
               </div>
               <div className="w-50">
+                <Select
+                  options={homes}
+                  onChange={handleSelectChange}
+                  placeholder={selectedOption}
+                  value={selectedOption}
+                  theme={theme}
+                  styles={customStyles}
+                />
+                <br></br>
                 <DeviceSlider
                   label="Air conditioner"
                   type="airConditioner"
@@ -326,10 +387,21 @@ const Dashboard = () => {
         </>
       )}
       {mode === "setting" && (
-        <ProfileBox
-          updateLeftSide={handleUpdateLeftSideBar}
-          update={updateLeftSideBar}
-        />
+        // <ProfileBox
+        //   updateLeftSide={handleUpdateLeftSideBar}
+        //   update={updateLeftSideBar}
+        // />
+
+        <div className="setting">
+          <ProfileBox
+            updateLeftSide={handleUpdateLeftSideBar}
+            update={updateLeftSideBar}
+          />
+          <h5 className="home-setting">Home Settings</h5>
+          {homes.map((home, index) => (
+            <HomeSettingBox key={index} homeName={home.value} />
+          ))}
+        </div>
       )}
       {mode === "history" && <History deviceType={clickedDeviceType.current} />}
     </div>

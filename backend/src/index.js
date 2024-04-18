@@ -4,6 +4,8 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import jwt from 'jsonwebtoken';
 import userRouter from './router/userRouter.js';
+import homeRouter from './router/homeRouter.js';
+import deviceRouter from './router/deviceRouter.js';
 import mongoose from 'mongoose';
 import mqtt from 'mqtt';
 import http from 'http';
@@ -62,6 +64,8 @@ client.on('message', (topic, message) => {
 /////////////////////////
 
 app.use('/users', userRouter);
+app.use('/homes', homeRouter);
+app.use('/devices', deviceRouter);
 
 server.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);

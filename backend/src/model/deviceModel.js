@@ -6,11 +6,11 @@ const deviceSchema = new mongoose.Schema(
     homeName: { type: String },
     autoDevice: { type: Boolean },
     deviceValue: [{ type: Number }],
-    deviceSettings: [
-      {
-        tempThreshold: [{ type: Number }],
-      },
-    ],
+    deviceSettings: {
+      tempThresholdLow: { type: Number },
+      tempThresholdAverage: { type: Number },
+      tempThresholdHigh: { type: Number },
+    },
   },
   { collection: 'devices' }
 );
