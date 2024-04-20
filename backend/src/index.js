@@ -11,6 +11,9 @@ import mqtt from 'mqtt';
 import http from 'http';
 import { Server } from 'socket.io';
 
+let usernameAdafruit = '';
+let keyAdafruit = '';
+
 mongoose.connect('mongodb://127.0.0.1:27017/smartHome', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -36,9 +39,10 @@ const io = new Server(server, {
     methods: ['GET', 'POST'],
   },
 });
+
 const client = mqtt.connect('mqtt://io.adafruit.com', {
-  username: 'tienhoang',
-  password: '',
+  username: usernameAdafruit,
+  password: keyAdafruit,
 });
 
 client.on('connect', () => {
@@ -66,6 +70,11 @@ client.on('message', (topic, message) => {
 app.use('/users', userRouter);
 app.use('/homes', homeRouter);
 app.use('/devices', deviceRouter);
+app.put('/update-adafruit', (req, res) => {
+  usernameAdafruit = req.body.username;
+  keyAdafruit = req.body.password;
+  res.status(200).send('Data updated successfully');
+});
 
 server.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);

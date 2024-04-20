@@ -4,8 +4,7 @@
   padding-top: 32px;
   text-align: center;
   border-right: 1px solid rgb(176, 176, 176);
-  position: relative;
-  height: 100%;
+  position:relative;
 }
 .leftSideBar .title {
   font-weight: bold;

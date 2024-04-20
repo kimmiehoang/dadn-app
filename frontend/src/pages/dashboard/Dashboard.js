@@ -29,6 +29,8 @@ const Dashboard = () => {
   const [updateLeftSideBar, setUpdateLeftSideBar] = useState(0);
   const [homes, setHomes] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
+  const [deviceListHome, setDeviceListHome] = useState([]);
+  const [temp, setTemp] = useState("");
   const [AIOkey, setAIOkey] = useState(``);
   const [adafruitUsername, setAdafruitUsername] = useState(`tienhoang`);
 
@@ -73,6 +75,23 @@ const Dashboard = () => {
     // controlHeight: 500,
     // menuGutter: baseUnit * 2
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/devices/air-conditioner/${selectedOption.value}`
+        );
+        const devices = response.data;
+        setDeviceListHome(devices);
+        console.log(devices);
+      } catch (error) {
+        console.error("Error fetching devices:", error);
+      }
+    };
+    fetchData();
+  }, [selectedOption]);
+
   const handleSelectChange = async (selectedOption) => {
     setSelectedOption(selectedOption);
     try {
@@ -81,6 +100,12 @@ const Dashboard = () => {
       );
       setAdafruitUsername(response.data.data.userAdafruit);
       setAIOkey(response.data.data.key);
+
+      const newData = {
+        username: response.data.data.userAdafruit,
+        password: response.data.data.key,
+      };
+      await axios.put("http://localhost:5000/update-adafruit", { newData });
 
       const responseLed = await axios.get(
         `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-led/data?limit=1`
@@ -130,15 +155,7 @@ const Dashboard = () => {
       else if (message.topic == `${adafruitUsername}/feeds/bbc-fan`)
         setCheckedAir(message.data);
       else if (message.topic == `${adafruitUsername}/feeds/bbc-temp`) {
-        if (message.data <= 25) {
-          handleChangeAir(0);
-        } else if (message.data <= 28) {
-          handleChangeAir(25);
-        } else if (message.data <= 32) {
-          handleChangeAir(50);
-        } else if (message.data > 32) {
-          handleChangeAir(75);
-        }
+        setTemp(message.data);
       }
     });
 
@@ -331,25 +348,6 @@ const Dashboard = () => {
             <div className="body d-flex">
               <div className="w-50">
                 <h3 className="my-smart-home">My smart home</h3>
-                <br></br>
-                <DeviceSwitch
-                  label="Light"
-                  type="light"
-                  status={checkedLight}
-                  onSwitch={handleChangeLight}
-                />
-                <DeviceSwitch
-                  label="Auto lighting mode"
-                  type="autoLight"
-                  status={checkedAutoLight}
-                  onSwitch={handleChangeAutoLight}
-                />
-                <Door
-                  label="Front door"
-                  type="front"
-                  status={checkedFront}
-                  onChangeStatus={handleChangeFront}
-                />
               </div>
               <div className="w-50">
                 <Select
@@ -360,19 +358,56 @@ const Dashboard = () => {
                   theme={theme}
                   styles={customStyles}
                 />
-                <br></br>
-                <DeviceSlider
-                  label="Air conditioner"
-                  type="airConditioner"
-                  value={checkedAir}
-                  onChangeSlider={handleChangeAir}
+              </div>
+            </div>
+            <div className="body d-flex">
+              <div className="w-50">
+                <DeviceSwitch
+                  label="Light"
+                  type="light"
+                  status={checkedLight}
+                  onSwitch={handleChangeLight}
                 />
+              </div>
+              <div className="w-50">
+                {deviceListHome.map((device, index) => (
+                  <DeviceSlider
+                    label={`Air conditioner ${index}`}
+                    type="airConditioner"
+                    value={checkedAir}
+                    onChangeSlider={handleChangeAir}
+                  />
+                ))}
+              </div>
+            </div>
+            <div className="body d-flex">
+              <div className="w-50">
+                <DeviceSwitch
+                  label="Auto lighting mode"
+                  type="autoLight"
+                  status={checkedAutoLight}
+                  onSwitch={handleChangeAutoLight}
+                />
+              </div>
+              <div className="w-50">
                 <DeviceSwitch
                   label="Auto air-conditioning mode"
                   type="autoAirConditioner"
                   status={checkedAutoAir}
                   onSwitch={handleChangeAutoAir}
                 />
+              </div>
+            </div>
+            <div className="body d-flex">
+              <div className="w-50">
+                <Door
+                  label="Front door"
+                  type="front"
+                  status={checkedFront}
+                  onChangeStatus={handleChangeFront}
+                />
+              </div>
+              <div className="w-50">
                 <Door
                   label="Back door"
                   type="back"
@@ -382,6 +417,8 @@ const Dashboard = () => {
               </div>
             </div>
             <DevicesHistory mode={mode} onChangeMode={handleHistoryClick} />
+            <br></br>
+            <br></br>
           </div>
           <Statistic />
         </>

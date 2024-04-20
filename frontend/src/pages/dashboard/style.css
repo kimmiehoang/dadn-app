@@ -1,13 +1,12 @@
 .dashboard {
   display: flex;
-  height: 100vh;
 }
 
 .main-board {
   width: calc(100% * (5 / 12));
   padding: 0px 32px;
-  box-shadow: 1px 4px 4px gray;
   padding-top: 32px;
+  height: 100%;
 }
 
 .main-board .welcome-text span {
@@ -25,7 +24,7 @@
 }
 
 .main-board .body {
-  margin-top: 48px;
+  margin-top: 20px;
 }
 
 h1, h3 {
