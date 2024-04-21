@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./HomeSettingForm.css";
 
 const HomeSettingForm = ({ device }) => {
   const [formData, setFormData] = useState({});
@@ -36,42 +37,44 @@ const HomeSettingForm = ({ device }) => {
 
   return (
     <form className="home-setting-form" onSubmit={handleOnSubmit}>
-      <br />
-      <h6>Temperature threshold for air-conditioner (°C)</h6>
-      <div>
-        <label>{`Air-conditioner: ${device.deviceName}`}</label>
-        <br />
-        <label>Low</label>
-        <br />
-        <input
-          type="text"
-          name="tempThresholdLow"
-          placeholder={device.deviceSettings.tempThresholdLow}
-          value={formData.tempThresholdLow || ""}
-          onChange={handleChange}
-        />
-        <br />
-        <label>Average</label>
-        <br />
-        <input
-          type="text"
-          name="tempThresholdAverage"
-          placeholder={device.deviceSettings.tempThresholdAverage}
-          value={formData.tempThresholdAverage || ""}
-          onChange={handleChange}
-        />
-        <br />
-        <label>High</label>
-        <br />
-        <input
-          type="text"
-          name="tempThresholdHigh"
-          placeholder={device.deviceSettings.tempThresholdHigh}
-          value={formData.tempThresholdHigh || ""}
-          onChange={handleChange}
-        />
+      <strong>Temperature threshold for {device.deviceName} (°C)</strong>
+
+      <div className="home-setting-info">
+        <div className="home-setting-field">
+          <label>Low</label>
+          <input
+            type="number"
+            name="tempThresholdLow"
+            placeholder={device.deviceSettings.tempThresholdLow}
+            value={formData.tempThresholdLow || ""}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="home-setting-field">
+          <label>Average</label>
+          <input
+            type="number"
+            name="tempThresholdAverage"
+            placeholder={device.deviceSettings.tempThresholdAverage}
+            value={formData.tempThresholdAverage || ""}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="home-setting-field">
+          <label>High</label>
+          <input
+            type="number"
+            name="tempThresholdHigh"
+            placeholder={device.deviceSettings.tempThresholdHigh}
+            value={formData.tempThresholdHigh || ""}
+            onChange={handleChange}
+          />
+        </div>
       </div>
-      <div className="profile-buttons">
+
+      <div className="home-setting-buttons">
         <button className="save" type="submit">
           Save
         </button>

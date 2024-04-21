@@ -25,9 +25,9 @@ const HomeSettingBox = ({ homeName }) => {
 
   return (
     <div className="home-setting-box">
-      <h2>
-        Home: <span>{homeName}</span>
-      </h2>
+      <h5>
+        <strong>Home:</strong> <span className="homename">{homeName}</span>
+      </h5>
       {deviceList.map((device, index) => (
         <HomeSettingForm key={index} device={device} />
       ))}

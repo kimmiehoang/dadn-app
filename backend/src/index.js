@@ -11,7 +11,7 @@ import mqtt from 'mqtt';
 import http from 'http';
 import { Server } from 'socket.io';
 
-let usernameAdafruit = '';
+let usernameAdafruit = 'tienhoang';
 let keyAdafruit = '';
 
 mongoose.connect('mongodb://127.0.0.1:27017/smartHome', {

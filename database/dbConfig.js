@@ -21,14 +21,14 @@ async function createDatabaseAndCollection() {
 
     await usersCollection.insertMany([
       {
-        homeName: "myhome1",
+        homeName: "Room 1",
         address: "123 Avenue Street, New York, USA",
         owner: ["johndoe@gmail.com"],
         userAdafruit: "tienhoang",
         key: "",
       },
       {
-        homeName: "myhome2",
+        homeName: "Room 2",
         address: "456 Dixon Street, Texas, USA",
         owner: ["johndoe@gmail.com", "janesmith@gmail.com"],
         userAdafruit: "tienhoang",
@@ -47,7 +47,7 @@ async function createDatabaseAndCollection() {
         password: "123abc",
         avtLink:
           "https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg",
-        home: ["myhome1", "myhome2"],
+        home: ["Room 1", "Room 2"],
       },
       {
         firstName: "Jane",
@@ -56,7 +56,7 @@ async function createDatabaseAndCollection() {
         password: "456xyz",
         avtLink:
           "https://static.vecteezy.com/system/resources/thumbnails/026/829/465/small_2x/beautiful-girl-with-autumn-leaves-photo.jpg",
-        home: ["myhome2"],
+        home: ["Room 2"],
       },
     ]);
 
@@ -66,7 +66,7 @@ async function createDatabaseAndCollection() {
       {
         deviceName: "air-conditioner1",
         deviceType: "air-conditioner",
-        homeName: "myhome1",
+        homeName: "Room 1",
         autoDevice: true,
         deviceValue: [0, 25, 50, 75],
         deviceSettings: {
@@ -74,11 +74,12 @@ async function createDatabaseAndCollection() {
           tempThresholdAverage: 30,
           tempThresholdHigh: 35,
         },
+        adafruitFeed: "bbc-fan",
       },
       {
         deviceName: "air-conditioner2",
         deviceType: "air-conditioner",
-        homeName: "myhome1",
+        homeName: "Room 2",
         autoDevice: true,
         deviceValue: [0, 25, 50, 75],
         deviceSettings: {
@@ -86,19 +87,21 @@ async function createDatabaseAndCollection() {
           tempThresholdAverage: 30,
           tempThresholdHigh: 35,
         },
+        adafruitFeed: "bbc-fan",
       },
       {
         deviceName: "light1",
-        homeName: "myhome1",
+        homeName: "Room 1",
         deviceType: "light",
         autoDevice: true,
         deviceValue: [0, 1],
         deviceSettings: [],
+        adafruitFeed: "bbc-led",
       },
       {
         deviceName: "air-conditioner1",
         deviceType: "air-conditioner",
-        homeName: "myhome2",
+        homeName: "Room 2",
         autoDevice: true,
         deviceValue: [0, 25, 50, 75],
         deviceSettings: {
@@ -106,14 +109,16 @@ async function createDatabaseAndCollection() {
           tempThresholdAverage: 30,
           tempThresholdHigh: 35,
         },
+        adafruitFeed: "bbc-fan",
       },
       {
         deviceName: "light1",
         deviceType: "light",
-        homeName: "myhome2",
+        homeName: "Room 2",
         autoDevice: true,
         deviceValue: [0, 1],
         deviceSettings: [],
+        adafruitFeed: "bbc-led",
       },
     ]);
   } catch (error) {

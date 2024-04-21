@@ -11,6 +11,7 @@ const deviceSchema = new mongoose.Schema(
       tempThresholdAverage: { type: Number },
       tempThresholdHigh: { type: Number },
     },
+    adafruitFeed: { type: String },
   },
   { collection: 'devices' }
 );

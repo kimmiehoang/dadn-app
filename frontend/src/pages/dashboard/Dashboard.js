@@ -19,20 +19,20 @@ const ENDPOINT = "http://localhost:5000";
 const Dashboard = () => {
   const [name, setName] = useState("");
   const [mode, setMode] = useState("dashboard");
-  const [checkedFront, setCheckedFront] = useState(0);
-  const [checkedBack, setCheckedBack] = useState(0);
-  const [checkedLight, setCheckedLight] = useState(0);
+  const [checkedFront, setCheckedFront] = useState(false);
+  const [checkedBack, setCheckedBack] = useState(false);
+  const [checkedLight, setCheckedLight] = useState(false);
   const [checkedAir, setCheckedAir] = useState(0);
-  const [checkedAutoLight, setCheckedAutoLight] = useState(0);
-  const [checkedAutoAir, setCheckedAutoAir] = useState(0);
+  const [checkedAutoLight, setCheckedAutoLight] = useState(false);
+  const [checkedAutoAir, setCheckedAutoAir] = useState(false);
   const clickedDeviceType = useRef("");
   const [updateLeftSideBar, setUpdateLeftSideBar] = useState(0);
   const [homes, setHomes] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   const [deviceListHome, setDeviceListHome] = useState([]);
   const [temp, setTemp] = useState("");
-  const [AIOkey, setAIOkey] = useState(``);
-  const [adafruitUsername, setAdafruitUsername] = useState(`tienhoang`);
+  const [AIOkey, setAIOkey] = useState("");
+  const [adafruitUsername, setAdafruitUsername] = useState("tienhoang");
 
   const customStyles = {
     control: (base) => ({
@@ -47,44 +47,20 @@ const Dashboard = () => {
       ...theme.colors,
       primary25: "#f3f3f3",
       primary: "#5640DC",
-
-      // All possible overrides
-      // primary: '#2684FF',
-      // primary75: '#4C9AFF',
-      // primary50: '#B2D4FF',
-      // primary25: '#DEEBFF',
-
-      // danger: '#DE350B',
-      // dangerLight: '#FFBDAD',
-
-      // neutral0: 'hsl(0, 0%, 100%)',
-      // neutral5: 'hsl(0, 0%, 95%)',
-      // neutral10: 'hsl(0, 0%, 90%)',
-      // neutral20: 'hsl(0, 0%, 80%)',
-      // neutral30: 'hsl(0, 0%, 70%)',
-      // neutral40: 'hsl(0, 0%, 60%)',
-      // neutral50: 'hsl(0, 0%, 50%)',
-      // neutral60: 'hsl(0, 0%, 40%)',
-      // neutral70: 'hsl(0, 0%, 30%)',
-      // neutral80: 'hsl(0, 0%, 20%)',
-      // neutral90: 'hsl(0, 0%, 10%)',
     },
-    // Other options you can use
     borderRadius: 10,
-    // baseUnit: 4,
-    // controlHeight: 500,
-    // menuGutter: baseUnit * 2
   });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/devices/air-conditioner/${selectedOption.value}`
-        );
-        const devices = response.data;
-        setDeviceListHome(devices);
-        console.log(devices);
+        if (selectedOption != null) {
+          const response = await axios.get(
+            `http://localhost:5000/devices/air-conditioner/${selectedOption.value}`
+          );
+          const devices = response.data;
+          setDeviceListHome(devices);
+        }
       } catch (error) {
         console.error("Error fetching devices:", error);
       }
@@ -180,6 +156,7 @@ const Dashboard = () => {
           value: home,
         }));
         setHomes(options);
+        setSelectedOption(options[0]);
       } catch (error) {
         console.error("Error fetching user by email:", error);
       }
@@ -189,7 +166,7 @@ const Dashboard = () => {
   }, [cookies]);
 
   const handleChangeFront = async (nextChecked) => {
-    var data = 0;
+    let data = 0;
     if (checkedFront == true) {
       setCheckedFront(false);
       data = 0;
@@ -198,7 +175,7 @@ const Dashboard = () => {
       data = 1;
     }
     try {
-      const response = await axios.post(
+      await axios.post(
         `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-door/data`,
         {
           value: data,
@@ -372,10 +349,17 @@ const Dashboard = () => {
               <div className="w-50">
                 {deviceListHome.map((device, index) => (
                   <DeviceSlider
-                    label={`Air conditioner ${index}`}
+                    key={`Air conditioner ${index + 1}`}
+                    label={`Air conditioner ${index + 1}`}
                     type="airConditioner"
                     value={checkedAir}
                     onChangeSlider={handleChangeAir}
+                    temperature={temp}
+                    tempThreshold={device.deviceSettings}
+                    deviceTempValue={device.deviceValue}
+                    adafruitUsername={adafruitUsername}
+                    AIOkey={AIOkey}
+                    autoMode={checkedAutoAir}
                   />
                 ))}
               </div>

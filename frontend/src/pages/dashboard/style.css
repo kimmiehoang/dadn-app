@@ -43,6 +43,5 @@ font-weight: bolder;
 .home-setting {
   font-weight: bold;
   color: var(--lightblue);
-  margin-top: 32px;
-  margin-left: 2.1%;
+  margin: 0 32px 20px;
 }
