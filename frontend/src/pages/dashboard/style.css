@@ -45,3 +45,11 @@ font-weight: bolder;
   color: var(--lightblue);
   margin: 0 32px 20px;
 }
+
+.empty-room {
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40%;
+  margin-bottom: 50%;
+}

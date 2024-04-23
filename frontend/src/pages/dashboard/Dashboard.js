@@ -32,7 +32,7 @@ const Dashboard = () => {
   const [deviceListHome, setDeviceListHome] = useState([]);
   const [temp, setTemp] = useState("");
   const [AIOkey, setAIOkey] = useState("");
-  const [adafruitUsername, setAdafruitUsername] = useState("tienhoang");
+  const [adafruitUsername, setAdafruitUsername] = useState("");
 
   const customStyles = {
     control: (base) => ({
@@ -81,62 +81,78 @@ const Dashboard = () => {
         username: response.data.data.userAdafruit,
         password: response.data.data.key,
       };
-      await axios.put("http://localhost:5000/update-adafruit", { newData });
-
-      const responseLed = await axios.get(
-        `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-led/data?limit=1`
-      );
-      const dataLed = responseLed.data;
-
-      if (dataLed[0].value == 1) setCheckedLight(true);
-      else setCheckedLight(false);
-
-      const responseAir = await axios.get(
-        `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-fan/data?limit=1`
-      );
-      const dataAir = responseAir.data;
-      setCheckedAir(parseInt(dataAir[0].value));
-
-      const responseAutoLed = await axios.get(
-        `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-auto-led/data?limit=1`
-      );
-      const dataAutoLed = responseAutoLed.data;
-      if (dataAutoLed[0].value == 1) setCheckedAutoLight(true);
-      else setCheckedAutoLight(false);
-
-      const responseAutoAir = await axios.get(
-        `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-auto-fan/data?limit=1`
-      );
-      const dataAutoAir = responseAutoAir.data;
-      if (dataAutoAir[0].value == 1) setCheckedAutoAir(true);
-      else setCheckedAutoAir(false);
-
-      const responseFrontDoor = await axios.get(
-        `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-door/data?limit=1`
-      );
-      const dataFrontDoor = responseFrontDoor.data;
-      if (dataFrontDoor[0].value == 1) setCheckedFront(true);
-      else setCheckedFront(false);
+      const socket = socketIOClient(ENDPOINT);
+      socket.emit("update-adafruit", newData);
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-    const socket = socketIOClient(ENDPOINT);
+    const fetchData2 = async () => {
+      if (adafruitUsername != "") {
+        try {
+          const responseLed = await axios.get(
+            `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-led/data?limit=1`
+          );
+          const dataLed = responseLed.data;
 
+          if (dataLed[0].value == 1) setCheckedLight(true);
+          else setCheckedLight(false);
+
+          const responseAir = await axios.get(
+            `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-fan/data?limit=1`
+          );
+          const dataAir = responseAir.data;
+          setCheckedAir(parseInt(dataAir[0].value));
+
+          const responseAutoLed = await axios.get(
+            `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-auto-led/data?limit=1`
+          );
+          const dataAutoLed = responseAutoLed.data;
+          if (dataAutoLed[0].value == 1) setCheckedAutoLight(true);
+          else setCheckedAutoLight(false);
+
+          const responseAutoAir = await axios.get(
+            `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-auto-fan/data?limit=1`
+          );
+          const dataAutoAir = responseAutoAir.data;
+          if (dataAutoAir[0].value == 1) setCheckedAutoAir(true);
+          else setCheckedAutoAir(false);
+
+          const responseFrontDoor = await axios.get(
+            `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-door/data?limit=1`
+          );
+          const dataFrontDoor = responseFrontDoor.data;
+          if (dataFrontDoor[0].value == 1) setCheckedFront(true);
+          else setCheckedFront(false);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+
+    fetchData2();
+  }, [adafruitUsername]);
+
+  useEffect(() => {
+    const socket = socketIOClient(ENDPOINT);
     socket.on("dataFromServer", (message) => {
+      console.log(message.data);
       if (message.topic == `${adafruitUsername}/feeds/bbc-led`)
         setCheckedLight(message.data);
-      else if (message.topic == `${adafruitUsername}/feeds/bbc-fan`)
+      else if (message.topic == `${adafruitUsername}/feeds/bbc-fan`) {
         setCheckedAir(message.data);
-      else if (message.topic == `${adafruitUsername}/feeds/bbc-temp`) {
+        console.log(checkedAir);
+        console.log(message.topic);
+        console.log(`${adafruitUsername}/feeds/bbc-fan`);
+      } else if (message.topic == `${adafruitUsername}/feeds/bbc-temp`) {
         setTemp(message.data);
       }
     });
 
     return () => socket.disconnect();
-  }, []);
+  }, [adafruitUsername]);
 
   useEffect(() => {
     const token = cookies.get("token");
@@ -156,7 +172,6 @@ const Dashboard = () => {
           value: home,
         }));
         setHomes(options);
-        setSelectedOption(options[0]);
       } catch (error) {
         console.error("Error fetching user by email:", error);
       }
@@ -197,7 +212,7 @@ const Dashboard = () => {
   };
 
   const handleChangeLight = async (nextChecked) => {
-    var data = 0;
+    let data = 0;
     if (checkedLight == true) {
       setCheckedLight(false);
       data = 0;
@@ -206,7 +221,7 @@ const Dashboard = () => {
       data = 1;
     }
     try {
-      const response = await axios.post(
+      await axios.post(
         `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-led/data`,
         {
           value: data,
@@ -226,7 +241,7 @@ const Dashboard = () => {
   const handleChangeAir = async (nextChecked) => {
     setCheckedAir(nextChecked);
     try {
-      const response = await axios.post(
+      await axios.post(
         `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-fan/data`,
         {
           value: nextChecked,
@@ -244,7 +259,7 @@ const Dashboard = () => {
   };
 
   const handleChangeAutoLight = async (nextChecked) => {
-    var data = 0;
+    let data = 0;
     if (checkedAutoLight == true) {
       setCheckedAutoLight(false);
       data = 0;
@@ -253,7 +268,7 @@ const Dashboard = () => {
       data = 1;
     }
     try {
-      const response = await axios.post(
+      await axios.post(
         `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-auto-led/data`,
         {
           value: data,
@@ -271,7 +286,7 @@ const Dashboard = () => {
   };
 
   const handleChangeAutoAir = async (nextChecked) => {
-    var data = 0;
+    let data = 0;
     if (checkedAutoAir == true) {
       setCheckedAutoAir(false);
       data = 0;
@@ -280,7 +295,7 @@ const Dashboard = () => {
       data = 1;
     }
     try {
-      const response = await axios.post(
+      await axios.post(
         `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-auto-fan/data`,
         {
           value: data,
@@ -324,83 +339,92 @@ const Dashboard = () => {
             </div>
             <div className="body d-flex">
               <div className="w-50">
-                <h3 className="my-smart-home">My smart home</h3>
+                <h3 className="my-smart-home">My smart room</h3>
               </div>
               <div className="w-50">
                 <Select
                   options={homes}
                   onChange={handleSelectChange}
-                  placeholder={selectedOption}
+                  placeholder="Select a room"
                   value={selectedOption}
                   theme={theme}
                   styles={customStyles}
                 />
               </div>
             </div>
-            <div className="body d-flex">
-              <div className="w-50">
-                <DeviceSwitch
-                  label="Light"
-                  type="light"
-                  status={checkedLight}
-                  onSwitch={handleChangeLight}
-                />
+            {selectedOption === null && (
+              <div className="empty-room">
+                <h3>Please choose a room</h3>
               </div>
-              <div className="w-50">
-                {deviceListHome.map((device, index) => (
-                  <DeviceSlider
-                    key={`Air conditioner ${index + 1}`}
-                    label={`Air conditioner ${index + 1}`}
-                    type="airConditioner"
-                    value={checkedAir}
-                    onChangeSlider={handleChangeAir}
-                    temperature={temp}
-                    tempThreshold={device.deviceSettings}
-                    deviceTempValue={device.deviceValue}
-                    adafruitUsername={adafruitUsername}
-                    AIOkey={AIOkey}
-                    autoMode={checkedAutoAir}
-                  />
-                ))}
-              </div>
-            </div>
-            <div className="body d-flex">
-              <div className="w-50">
-                <DeviceSwitch
-                  label="Auto lighting mode"
-                  type="autoLight"
-                  status={checkedAutoLight}
-                  onSwitch={handleChangeAutoLight}
-                />
-              </div>
-              <div className="w-50">
-                <DeviceSwitch
-                  label="Auto air-conditioning mode"
-                  type="autoAirConditioner"
-                  status={checkedAutoAir}
-                  onSwitch={handleChangeAutoAir}
-                />
-              </div>
-            </div>
-            <div className="body d-flex">
-              <div className="w-50">
-                <Door
-                  label="Front door"
-                  type="front"
-                  status={checkedFront}
-                  onChangeStatus={handleChangeFront}
-                />
-              </div>
-              <div className="w-50">
-                <Door
-                  label="Back door"
-                  type="back"
-                  status={checkedBack}
-                  onChangeStatus={handleChangeBack}
-                />
-              </div>
-            </div>
-            <DevicesHistory mode={mode} onChangeMode={handleHistoryClick} />
+            )}
+            {selectedOption != null && (
+              <>
+                <div className="body d-flex">
+                  <div className="w-50">
+                    <DeviceSwitch
+                      label="Light"
+                      type="light"
+                      status={checkedLight}
+                      onSwitch={handleChangeLight}
+                    />
+                  </div>
+                  <div className="w-50">
+                    {deviceListHome.map((device, index) => (
+                      <DeviceSlider
+                        key={`Air conditioner ${index + 1}`}
+                        label={`Air conditioner ${index + 1}`}
+                        type="airConditioner"
+                        value={checkedAir}
+                        onChangeSlider={handleChangeAir}
+                        temperature={temp}
+                        tempThreshold={device.deviceSettings}
+                        deviceTempValue={device.deviceValue}
+                        adafruitUsername={adafruitUsername}
+                        AIOkey={AIOkey}
+                        autoMode={checkedAutoAir}
+                      />
+                    ))}
+                  </div>
+                </div>
+                <div className="body d-flex">
+                  <div className="w-50">
+                    <DeviceSwitch
+                      label="Auto lighting mode"
+                      type="autoLight"
+                      status={checkedAutoLight}
+                      onSwitch={handleChangeAutoLight}
+                    />
+                  </div>
+                  <div className="w-50">
+                    <DeviceSwitch
+                      label="Auto air-conditioning mode"
+                      type="autoAirConditioner"
+                      status={checkedAutoAir}
+                      onSwitch={handleChangeAutoAir}
+                    />
+                  </div>
+                </div>
+                <div className="body d-flex">
+                  <div className="w-50">
+                    <Door
+                      label="Front door"
+                      type="front"
+                      status={checkedFront}
+                      onChangeStatus={handleChangeFront}
+                    />
+                  </div>
+                  <div className="w-50">
+                    <Door
+                      label="Back door"
+                      type="back"
+                      status={checkedBack}
+                      onChangeStatus={handleChangeBack}
+                    />
+                  </div>
+                </div>
+                <DevicesHistory mode={mode} onChangeMode={handleHistoryClick} />
+              </>
+            )}
             <br></br>
             <br></br>
           </div>
