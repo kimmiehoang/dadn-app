@@ -1,0 +1,41 @@
+.home-setting-info {
+    display: flex;
+  }
+  
+  .home-setting-field {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+  }
+  
+  .home-setting-info input {
+    background-color: #ffffff;
+    border: 1px solid #E5E5ED;
+    padding: 4px 12px;
+    width: 40%;
+    border-radius: 10px;
+  }
+  
+  .home-setting-buttons {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .home-setting-buttons button {
+    border: 1px solid #ccc;
+    color: black;
+    background-color: #fff;
+    border-radius: 8px;
+    font-weight: bold;
+    padding: 0px 12px;
+  }
+  
+  .home-setting-buttons button:hover{
+    opacity: 0.9;
+  }
+  
+  .home-setting-buttons .save{
+    background-color: var(--lightblue);
+    color: #fff;
+    padding: 4px 8px;
+  }

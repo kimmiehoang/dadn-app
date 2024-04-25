@@ -1,5 +1,4 @@
 import "./ProfileBox.css";
-import catImg from "../../assets/images/cat.jpg";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Cookies from "universal-cookie";
@@ -65,7 +64,7 @@ const ProfileBox = ({ updateLeftSide }, update) => {
       });
 
       const data = await response.json();
-      if (data.success == true) {
+      if (data.success) {
         window.alert(data.message);
       }
     } catch (error) {
@@ -79,7 +78,7 @@ const ProfileBox = ({ updateLeftSide }, update) => {
 
   return (
     <div className="profile-box">
-      <h5>Account Settings</h5>
+      <h4>Account Settings</h4>
       <form className="profile-form" onSubmit={handleOnSubmit}>
         <div className="profile-avatar">
           <img src={avt} alt="avatar" />

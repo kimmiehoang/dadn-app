@@ -1,7 +1,20 @@
 import Slider from "@mui/material/Slider";
 import "./DeviceSlider.css";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-const DeviceSlider = ({ label, type, value, onChangeSlider }) => {
+const DeviceSlider = ({
+  label,
+  type,
+  value,
+  onChangeSlider,
+  temperature,
+  tempThreshold,
+  deviceTempValue,
+  adafruitUsername,
+  AIOkey,
+  autoMode,
+}) => {
   const types = {
     light: "fa-regular fa-lightbulb",
     airConditioner: "fa-solid fa-wind",
@@ -10,6 +23,83 @@ const DeviceSlider = ({ label, type, value, onChangeSlider }) => {
   const handleSliderChange = (event, newValue) => {
     onChangeSlider(newValue);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (autoMode == 1) {
+        let tempValue = 0;
+        try {
+          if (
+            parseFloat(temperature) >
+            parseFloat(tempThreshold.tempThresholdHigh)
+          ) {
+            tempValue = deviceTempValue[3];
+            const response = await axios.post(
+              `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-fan/data`,
+              {
+                value: 75,
+              },
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  "X-AIO-Key": AIOkey,
+                },
+              }
+            );
+          } else if (
+            parseFloat(temperature) >
+            parseFloat(tempThreshold.tempThresholdAverage)
+          ) {
+            tempValue = deviceTempValue[2];
+            const response = await axios.post(
+              `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-fan/data`,
+              {
+                value: 50,
+              },
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  "X-AIO-Key": AIOkey,
+                },
+              }
+            );
+          } else if (
+            parseFloat(temperature) > parseFloat(tempThreshold.tempThresholdLow)
+          ) {
+            tempValue = deviceTempValue[1];
+            const response = await axios.post(
+              `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-fan/data`,
+              {
+                value: 25,
+              },
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  "X-AIO-Key": AIOkey,
+                },
+              }
+            );
+          } else {
+            const response = await axios.post(
+              `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-fan/data`,
+              {
+                value: 0,
+              },
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  "X-AIO-Key": AIOkey,
+                },
+              }
+            );
+          }
+        } catch (error) {
+          console.error("Error sending request to Adafruit:", error);
+        }
+      }
+    };
+    fetchData();
+  }, [temperature, autoMode]);
 
   return (
     <div className="device-slider">

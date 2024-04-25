@@ -1,7 +1,6 @@
 import User from '../model/userModel.js';
 import CookieController from '../controller/cookieController.js';
 const cookieController = new CookieController();
-import mongoose from 'mongoose';
 
 class UserController {
   async login(req, res) {
@@ -21,7 +20,7 @@ class UserController {
       if (isMatch) {
         let key = 'dadn232';
 
-        var tokenResult = cookieController.encodeCookie(user.email, key);
+        let tokenResult = cookieController.encodeCookie(user.email, key);
 
         res.status(200).json({ success: true, token: tokenResult });
       } else {
