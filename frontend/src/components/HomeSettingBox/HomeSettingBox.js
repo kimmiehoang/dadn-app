@@ -4,7 +4,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import HomeSettingForm from "../../components/HomeSettingForm";
 
-const HomeSettingBox = ({ homeName }) => {
+const HomeSettingBox = ({ homeName, onSaveReload }) => {
   const [deviceList, setDeviceList] = useState([]);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const HomeSettingBox = ({ homeName }) => {
         <strong>Home:</strong> <span className="homename">{homeName}</span>
       </h5>
       {deviceList.map((device, index) => (
-        <HomeSettingForm key={index} device={device} />
+        <HomeSettingForm key={index} device={device} onSave={onSaveReload} />
       ))}
     </div>
   );

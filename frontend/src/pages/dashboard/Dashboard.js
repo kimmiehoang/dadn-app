@@ -30,6 +30,7 @@ const Dashboard = () => {
   const [homes, setHomes] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   const [deviceListHome, setDeviceListHome] = useState([]);
+  const [reloadDevices, setReloadDevices] = useState(0);
   const [temp, setTemp] = useState("");
   const [AIOkey, setAIOkey] = useState("");
   const [adafruitUsername, setAdafruitUsername] = useState("");
@@ -66,7 +67,7 @@ const Dashboard = () => {
       }
     };
     fetchData();
-  }, [selectedOption]);
+  }, [selectedOption, reloadDevices]);
 
   const handleSelectChange = async (selectedOption) => {
     setSelectedOption(selectedOption);
@@ -444,7 +445,11 @@ const Dashboard = () => {
           />
           <h5 className="home-setting">Home Settings</h5>
           {homes.map((home, index) => (
-            <HomeSettingBox key={index} homeName={home.value} />
+            <HomeSettingBox
+              key={index}
+              homeName={home.value}
+              onSaveReload={setReloadDevices}
+            />
           ))}
         </div>
       )}

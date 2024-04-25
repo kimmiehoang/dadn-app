@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./HomeSettingForm.css";
 
-const HomeSettingForm = ({ device }) => {
+const HomeSettingForm = ({ device, onSave }) => {
   const [formData, setFormData] = useState({});
 
   useEffect(() => {
@@ -29,6 +29,7 @@ const HomeSettingForm = ({ device }) => {
         `http://localhost:5000/devices/settings/update/${device._id}`,
         formData
       );
+      onSave((prevSave) => prevSave + 1);
       console.log("Device information updated successfully");
     } catch (error) {
       console.error("Error updating device information:", error);

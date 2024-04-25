@@ -29,12 +29,15 @@ const DeviceSlider = ({
       if (autoMode == 1) {
         let tempValue = 0;
         try {
-          if (parseFloat(temperature) > tempThreshold.tempThresholdHigh) {
+          if (
+            parseFloat(temperature) >
+            parseFloat(tempThreshold.tempThresholdHigh)
+          ) {
             tempValue = deviceTempValue[3];
             const response = await axios.post(
               `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-fan/data`,
               {
-                value: tempValue,
+                value: 75,
               },
               {
                 headers: {
@@ -44,13 +47,14 @@ const DeviceSlider = ({
               }
             );
           } else if (
-            parseFloat(temperature) > tempThreshold.tempThresholdAverage
+            parseFloat(temperature) >
+            parseFloat(tempThreshold.tempThresholdAverage)
           ) {
             tempValue = deviceTempValue[2];
             const response = await axios.post(
               `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-fan/data`,
               {
-                value: tempValue,
+                value: 50,
               },
               {
                 headers: {
@@ -59,12 +63,14 @@ const DeviceSlider = ({
                 },
               }
             );
-          } else if (parseFloat(temperature) > tempThreshold.tempThresholdLow) {
+          } else if (
+            parseFloat(temperature) > parseFloat(tempThreshold.tempThresholdLow)
+          ) {
             tempValue = deviceTempValue[1];
             const response = await axios.post(
               `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-fan/data`,
               {
-                value: tempValue,
+                value: 25,
               },
               {
                 headers: {
@@ -77,7 +83,7 @@ const DeviceSlider = ({
             const response = await axios.post(
               `https://io.adafruit.com/api/v2/${adafruitUsername}/feeds/bbc-fan/data`,
               {
-                value: tempValue,
+                value: 0,
               },
               {
                 headers: {
@@ -93,7 +99,7 @@ const DeviceSlider = ({
       }
     };
     fetchData();
-  }, [temperature]);
+  }, [temperature, autoMode]);
 
   return (
     <div className="device-slider">
